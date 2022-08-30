@@ -1,0 +1,35 @@
+## Interface: 20504
+## Version: 1.0.1
+## Title: LossOfControlMessages |T135860/:16:16:0:0|t by |cFFAAAAFFD4KiR |T132115/:16:16:0:0|t 
+## Notes: Send to chat LOC messages
+## Author: D4KiR
+## DefaultState: enabled
+## SavedVariables: LOCTAB
+## SavedVariablesPerCharacter: LOCTABPC
+## X-Curse-Project-ID: 391012
+## X-Wago-ID: anKW5rNE
+
+# External Libs
+libs\LibStub\LibStub.lua
+libs\LibUIDropDownMenu\LibUIDropDownMenu.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+
+libs/LIB_output.lua
+libs/LIB_math.lua
+libs/LIB_design.lua
+
+locale\enUS.lua
+locale\deDE.lua
+locale\esES.lua
+locale\esMX.lua
+locale\frFR.lua
+locale\koKR.lua
+locale\ruRU.lua
+locale\zhCN.lua
+locale\zhTW.lua
+
+config.lua
+
+settings.lua
+
+core.lua
