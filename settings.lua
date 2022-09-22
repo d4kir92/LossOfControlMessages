@@ -135,7 +135,7 @@ function LOCInitSetting()
 	settings_prefix.name = "prefix"
 	settings_prefix.parent = LOCTAB_Settings.panel
 	settings_prefix.value = LOCGetConfig("prefix", "[LOC]")
-	settings_prefix.text = L["prefix"]
+	settings_prefix.text = L["prefix"] .. " (ALL)"
 	settings_prefix.x = 10
 	settings_prefix.y = Y
 	settings_prefix.dbvalue = "prefix"
@@ -145,17 +145,13 @@ function LOCInitSetting()
 	settings_suffix.name = "suffix"
 	settings_suffix.parent = LOCTAB_Settings.panel
 	settings_suffix.value = LOCGetConfig("suffix", "")
-	settings_suffix.text = L["suffix"]
-	settings_suffix.x = 10 + 250 + 10
+	settings_suffix.text = L["suffix"] .. " (ALL)"
+	settings_suffix.x = 10 + 300 + 10
 	settings_suffix.y = Y
 	settings_suffix.dbvalue = "suffix"
 	LOCCreateTextBox(settings_suffix)
 	Y = Y - BR
 
-
-	-- RIGHT
-	local LX = 300
-	local LY = -46
 	local LOCTypes = {
 		"DISARM",
 		"STUN_MECHANIC",
@@ -172,6 +168,33 @@ function LOCInitSetting()
 		"FEAR_MECHANIC",
 		"NONE"
 	}
+
+	for i, v in pairs( LOCTypes ) do
+		local settings_prefix = {}
+		settings_prefix.name = "prefix"
+		settings_prefix.parent = LOCTAB_Settings.panel
+		settings_prefix.value = LOCGetConfig("prefix_" .. v, "")
+		settings_prefix.text = L["prefix"] .. " (" .. v .. ")"
+		settings_prefix.x = 10
+		settings_prefix.y = Y
+		settings_prefix.dbvalue = "prefix_" .. v
+		LOCCreateTextBox(settings_prefix)
+	
+		local settings_suffix = {}
+		settings_suffix.name = "suffix"
+		settings_suffix.parent = LOCTAB_Settings.panel
+		settings_suffix.value = LOCGetConfig("suffix_" .. v, "")
+		settings_suffix.text = L["suffix"] .. " (" .. v .. ")"
+		settings_suffix.x = 10 + 300 + 10
+		settings_suffix.y = Y
+		settings_suffix.dbvalue = "suffix_" .. v
+		LOCCreateTextBox(settings_suffix)
+		Y = Y - BR
+	end
+
+	-- RIGHT
+	local LX = 300
+	local LY = -46
 	local c = 0
 	for i, loctype in pairs(LOCTypes) do
 		loctype = string.lower(loctype)

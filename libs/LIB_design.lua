@@ -17,9 +17,9 @@ function LOCCreateTextBox(tab)
 	tab.parent = tab.parent or UIParent
 	tab.x = tab.x or 0
 	tab.y = tab.y or 0
-	local f = CreateFrame("Button", nil, tab.parent)
+	local f = CreateFrame( "Frame", nil, tab.parent )
 	f:SetPoint("TOPLEFT", tab.x, tab.y)
-	f:SetSize(250, 50)
+	f:SetSize(300, 25)
 
 	tab.frame = f
 	tab.parent = f
@@ -28,9 +28,9 @@ function LOCCreateTextBox(tab)
 	tab.text = tab.text
 	f.header = LOCCreateText(tab)
 
-	f.Text = CreateFrame("EditBox", nil, f)
-	f.Text:SetPoint("TOPRIGHT", -2, -25)
-	f.Text:SetPoint("BOTTOMLEFT", 2, 2)
+	f.Text = CreateFrame( "EditBox", nil, f, "InputBoxTemplate" )
+	f.Text:SetPoint( "TOPLEFT", 200, 0 )
+	f.Text:SetPoint( "BOTTOMRIGHT", 0, 0 )
 	f.Text:SetMultiLine(false)
 	f.Text:SetMaxLetters(20)
 	f.Text:SetFontObject(GameFontNormal)

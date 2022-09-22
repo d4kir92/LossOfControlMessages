@@ -39,7 +39,7 @@ function LOCToCurrentChat(msg)
 	elseif suffix == " " then
 		suffix = ""
 	end
-
+	local mes = prefix .. msg .. suffix
 	if GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL" then
 		if LOCGetConfig("printnothing", false) == true then
 			-- print nothing
@@ -50,7 +50,6 @@ function LOCToCurrentChat(msg)
 		elseif (_channel == "SAY" or _channel == "YELL") and not inInstance then
 			-- ERROR: SAY and YELL only works in instance
 		else
-			local mes = prefix .. msg .. suffix
 			if mes ~= nil then
 				SendChatMessage(mes, _channel)
 			end
@@ -149,6 +148,14 @@ f_loc:SetScript("OnEvent", function(self, event, id)
 			if text and (not self.past[text] or GetTime() > self.past[text]) and LOCGetConfig(string.lower(loctype), false) and not LOCGetConfig("printnothing", false) and loctype ~= "NONE" then
 				self.past[text] = GetTime() + duration
 				if LOCGetConfig("showlocchat", true) and LOCAllowedTo() then
+					local loctypePrefix = LOCGetConfig( "prefix_" .. loctype, "" )
+					if loctypePrefix ~= "" then
+						text = loctypePrefix .. " " .. text
+					end
+					local loctypeSuffix = LOCGetConfig( "suffix_" .. loctype, "" )
+					if loctypeSuffix ~= "" then
+						text = text .. " " .. loctypeSuffix
+					end
 					LOCToCurrentChat(string.format(L["loctext"], text, LOCMathR(duration, 1)))
 				end
 				if LOCGetConfig("showlocemote", true) and LOCAllowedTo() then
