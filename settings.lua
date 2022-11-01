@@ -3,7 +3,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 
 LOCBUILD = "CLASSIC"
-if select(4, GetBuildInfo()) > 90000 then
+if select(4, GetBuildInfo()) >= 100000 then
 	LOCBUILD = "RETAIL"
 elseif select(4, GetBuildInfo()) > 29999 then
 	LOCBUILD = "WRATH"
