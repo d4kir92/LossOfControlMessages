@@ -1,20 +1,22 @@
 -- By D4KiR
 
+local AddOnName, LocMessages = ...
+
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 
-function LOCAllowedTo()
-	local _channel = LOCGetConfig("channelchat", "AUTO")
-	if (GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL") and LOCGetConfig("printnothing", false) == false then
+function LocMessages:AllowedTo()
+	local _channel = LocMessages:GetConfig("channelchat", "AUTO")
+	if (GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL") and LocMessages:GetConfig("printnothing", false) == false then
 		return true
 	end
 	return false
 end
 
-function LOCToCurrentChat(msg)
+function LocMessages:ToCurrentChat(msg)
 	local _channel = "SAY"
 	local inInstance, instanceType = IsInInstance()
 
-	if LOCGetConfig("channelchat", "AUTO") == "AUTO" then
+	if LocMessages:GetConfig("channelchat", "AUTO") == "AUTO" then
 		if IsInRaid(LE_PARTY_CATEGORY_HOME) then
 			_channel = "RAID"
 		elseif IsInRaid(LE_PARTY_CATEGORY_INSTANCE) or IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
@@ -23,11 +25,11 @@ function LOCToCurrentChat(msg)
 			_channel = "PARTY"
 		end
 	else
-		_channel = LOCGetConfig("channelchat", "AUTO")
+		_channel = LocMessages:GetConfig("channelchat", "AUTO")
 	end
 
-	local prefix = LOCGetConfig("prefix", "[LOC]")
-	local suffix = LOCGetConfig("suffix", "")
+	local prefix = LocMessages:GetConfig("prefix", "[LOC]")
+	local suffix = LocMessages:GetConfig("suffix", "")
 
 	if prefix ~= "" and prefix ~= " " then
 		prefix = prefix .. " "
@@ -41,11 +43,11 @@ function LOCToCurrentChat(msg)
 	end
 	local mes = prefix .. msg .. suffix
 	if GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL" then
-		if LOCGetConfig("printnothing", false) == true then
+		if LocMessages:GetConfig("printnothing", false) == true then
 			-- print nothing
-		elseif UnitInBattleground("player") ~= nil and LOCGetConfig("showinbgs", false) == false then
+		elseif UnitInBattleground("player") ~= nil and LocMessages:GetConfig("showinbgs", false) == false then
 			-- dont print in bg
-		elseif UnitInRaid("player") ~= nil and LOCGetConfig("showinraids", false) == false then
+		elseif UnitInRaid("player") ~= nil and LocMessages:GetConfig("showinraids", false) == false then
 			-- dont print in raid
 		elseif (_channel == "SAY" or _channel == "YELL") and not inInstance then
 			-- ERROR: SAY and YELL only works in instance
@@ -57,16 +59,16 @@ function LOCToCurrentChat(msg)
 	end
 end
 
-function SetupLOC()
-	if LOCSETUP then
+function LocMessages:SetupLOC()
+	if LocMessages:GetSetup() then
 		if not InCombatLockdown() then
-			LOCSETUP = false
+			LocMessages:SetSetup( false )
 
-			LOCInitSetting()
+			LocMessages:InitSetting()
 
 		else
 			C_Timer.After(0.1, function()	
-				SetupLOC()
+				LocMessages:SetupLOC()
 			end)
 		end
 	end
@@ -111,7 +113,7 @@ f_loc:SetScript("OnEvent", function(self, event, id)
 			if _G["STRING_SCHOOL_" .. dispelType] then
 				--dispelType = _G["STRING_SCHOOL_" .. dispelType]
 			end
-			if LOCGetConfig("showdispelltype", true) then
+			if LocMessages:GetConfig("showdispelltype", true) then
 				text = text .. " [" .. dispelType .. "]"
 			end
 		end
@@ -145,20 +147,20 @@ f_loc:SetScript("OnEvent", function(self, event, id)
 				locs[text] = GetTime() + duration
 			end
 
-			if text and (not self.past[text] or GetTime() > self.past[text]) and LOCGetConfig(string.lower(loctype), false) and not LOCGetConfig("printnothing", false) and loctype ~= "NONE" then
+			if text and (not self.past[text] or GetTime() > self.past[text]) and LocMessages:GetConfig(string.lower(loctype), false) and not LocMessages:GetConfig("printnothing", false) and loctype ~= "NONE" then
 				self.past[text] = GetTime() + duration
-				if LOCGetConfig("showlocchat", true) and LOCAllowedTo() then
-					local loctypePrefix = LOCGetConfig( "prefix_" .. loctype, "" )
+				if LocMessages:GetConfig("showlocchat", true) and LocMessages:AllowedTo() then
+					local loctypePrefix = LocMessages:GetConfig( "prefix_" .. loctype, "" )
 					if loctypePrefix ~= "" then
 						text = loctypePrefix .. " " .. text
 					end
-					local loctypeSuffix = LOCGetConfig( "suffix_" .. loctype, "" )
+					local loctypeSuffix = LocMessages:GetConfig( "suffix_" .. loctype, "" )
 					if loctypeSuffix ~= "" then
 						text = text .. " " .. loctypeSuffix
 					end
-					LOCToCurrentChat(string.format(L["loctext"], text, LOCMathR(duration, 1)))
+					LocMessages:ToCurrentChat(string.format(L["loctext"], text, LocMessages:MathR(duration, 1)))
 				end
-				if LOCGetConfig("showlocemote", true) and LOCAllowedTo() then
+				if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() then
 					DoEmote("helpme")
 				end
 			end
@@ -167,9 +169,9 @@ f_loc:SetScript("OnEvent", function(self, event, id)
 			if LOCBUILD ~= "CLASSIC" then
 				gam = "RETAIL"
 			end
-			print("[SEND THIS TO THE DEV OF: " .. tostring(LOCname) .. "] [" .. gam .. "]")
+			print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
 			print("Missing LOC Type: " .. loctype .. " text: " .. text)
-			print("[SEND THIS TO THE DEV OF: " .. tostring(LOCname) .. "] [" .. gam .. "]")
+			print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
 		end
 	end
 end)
@@ -182,25 +184,25 @@ local name, realm = UnitFullName("player")
 local cmds = {}
 
 cmds["!loc"] = function()
-	LOCmsg("------------------------------------------")
-	LOCmsg("!loc help => Shows Help Text")
-	LOCmsg("!loc off => Turns LOC Messages off")
-	LOCmsg("!loc on => Turns LOC Messages on")
-	LOCmsg("------------------------------------------")
+	LocMessages:MSG("------------------------------------------")
+	LocMessages:MSG("!loc help => Shows Help Text")
+	LocMessages:MSG("!loc off => Turns LOC Messages off")
+	LocMessages:MSG("!loc on => Turns LOC Messages on")
+	LocMessages:MSG("------------------------------------------")
 end
 cmds["!loc help"] = cmds["!loc"]
 
 cmds["!loc off"] = function()
-	LOCGetConfig("printnothing", true)
+	LocMessages:GetConfig("printnothing", true)
 	LOCTABPC["printnothing"] = true
 
-	LOCmsg("Turned off")
+	LocMessages:MSG("Turned off")
 end
 
 cmds["!loc on"] = function()
-	LOCGetConfig("printnothing", false)
+	LocMessages:GetConfig("printnothing", false)
 	LOCTABPC["printnothing"] = false
 
-	LOCmsg("Turned on")
+	LocMessages:MSG("Turned on")
 end
 

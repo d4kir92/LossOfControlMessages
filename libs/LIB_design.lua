@@ -1,9 +1,11 @@
 -- LIB Design
 
+local AddOnName, LocMessages = ...
+
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
 local CBS = {}
-function LOCCreateText(tab)
+function LocMessages:CreateText(tab)
 	tab.textsize = tab.textsize or 12
 	local text = tab.frame:CreateFontString(nil, "ARTWORK")
 	text:SetFont(STANDARD_TEXT_FONT, tab.textsize, "OUTLINE")
@@ -12,7 +14,7 @@ function LOCCreateText(tab)
 	return text
 end
 
-function LOCCreateTextBox(tab)
+function LocMessages:CreateTextBox(tab)
 	tab = tab or {}
 	tab.parent = tab.parent or UIParent
 	tab.x = tab.x or 0
@@ -26,7 +28,7 @@ function LOCCreateTextBox(tab)
 	tab.x = 4
 	tab.y = -4
 	tab.text = tab.text
-	f.header = LOCCreateText(tab)
+	f.header = LocMessages:CreateText(tab)
 
 	f.Text = CreateFrame( "EditBox", nil, f, "InputBoxTemplate" )
 	f.Text:SetPoint( "TOPLEFT", 200, 0 )
@@ -44,13 +46,13 @@ function LOCCreateTextBox(tab)
 		self:SetText(text)
 		LOCTABPC[tab.dbvalue] = text
 
-		SetupLOC()
+		LocMessages:SetupLOC()
 	end)
 
 	return f
 end
 
-function LOCCreateCheckBox(tab)
+function LocMessages:CreateCheckBox(tab)
 	tab = tab or {}
 	tab.parent = tab.parent or UIParent
 	tab.tooltip = tab.tooltip or ""
@@ -65,7 +67,7 @@ function LOCCreateCheckBox(tab)
 		self:SetChecked(status)
 		LOCTABPC[tab.dbvalue] = status
 
-		SetupLOC()
+		LocMessages:SetupLOC()
 	end)
 	local entry = {}
 	entry.ele = CB
@@ -75,12 +77,12 @@ function LOCCreateCheckBox(tab)
 	tab.frame = CB
 	tab.x = tab.x + 26
 	tab.y = tab.y - 6
-	CB.text = LOCCreateText(tab)
+	CB.text = LocMessages:CreateText(tab)
 
 	return CB
 end
 
-function LOCCreateComboBox(tab)
+function LocMessages:CreateComboBox(tab)
 	tab = tab or {}
 	tab.parent = tab.parent or UIParent
 	tab.tooltip = tab.tooltip or ""
@@ -108,7 +110,7 @@ function LOCCreateComboBox(tab)
 	return CB
 end
 
-function LOCCreateSlider(tab)
+function LocMessages:CreateSlider(tab)
 	tab = tab or {}
 	tab.parent = tab.parent or UIParent
 	tab.x = tab.x or 0
@@ -126,7 +128,7 @@ function LOCCreateSlider(tab)
 	SL:SetValueStep(tab.steps)
 	SL.decimals = tab.decimals or 0
 	SL:SetScript("OnValueChanged", function(self, val)
-		val = LOCMathR(val, self.decimals)
+		val = LocMessages:MathR(val, self.decimals)
 		val = val - val % tab.steps
 		LOCTABPC[tab.dbvalue] = val
 		local trans = {}
@@ -146,7 +148,7 @@ function LOCCreateSlider(tab)
 	return EB
 end
 
-function LOCCTexture(frame, tab)
+function LocMessages:CTexture(frame, tab)
 	tab.layer = tab.layer or "BACKGROUND"
 	local texture = frame:CreateTexture(nil, tab.layer)
 	tab.texture = tab.texture or ""
@@ -182,7 +184,7 @@ function LOCCTexture(frame, tab)
 	return texture
 end
 
-function LOCcreateF(tab)
+function LocMessages:CreateF(tab)
 	tab.w = tab.w or 2
 	tab.h = tab.h or 2
 	tab.x = tab.x or 0
@@ -199,7 +201,7 @@ function LOCcreateF(tab)
 	frame:SetPoint(tab.align, tab.parent, tab.align, tab.x, tab.y)
 
 	tab.layer = tab.layer or "BACKGROUND"
-	frame.texture = LOCCTexture(frame, tab)
+	frame.texture = LocMessages:CTexture(frame, tab)
 
 	tab.textlayer = tab.textlayer or "ARTWORK"
 	frame.text = frame:CreateFontString(nil, tab.textlayer)
@@ -214,130 +216,11 @@ function LOCcreateF(tab)
 	return frame
 end
 
-function LOCCreateBar(tab)
-	tab.w = 800
-	tab.h = LOCGetConfig("barheight") --13
-	tab.alpha = 0.7
-	tab.text = ""
-	tab.bgcolor = tab.bgcolor or {}
-	tab.bgcolor.r = tab.bgcolor.r or 0.2
-	tab.bgcolor.g = tab.bgcolor.g or 0.2
-	tab.bgcolor.b = tab.bgcolor.b or 0.2
-	tab.bgcolor.a = tab.bgcolor.a or tab.alpha
-	tab.color = tab.bgcolor
-	tab.texture = "Interface/TargetingFrame/UI-StatusBar"
-	local bar = {}
-	tab.autoresize = true
-	bar.background = LOCcreateF(tab)
-
-	tab.parent = bar.background
-	tab.barcolor = tab.barcolor or {}
-	tab.barcolor.r = tab.barcolor.r or 0.3
-	tab.barcolor.g = tab.barcolor.g or 0.1
-	tab.barcolor.b = tab.barcolor.b or 1
-	tab.barcolor.a = tab.barcolor.a or tab.alpha
-	tab.color = tab.barcolor
-	tab.text = ""
-	tab.align = "LEFT"
-	tab.texture = "Interface/TargetingFrame/UI-StatusBar"
-	tab.autoresize = true
-	bar.bar = LOCcreateF(tab)
-	--tab.autoresize = false
-
-	tab.align = "CENTER"
-	tab.texture = ""
-	tab.color.a = 0
-	tab.text = ""
-	bar.overlay = LOCcreateF(tab)
-	local bars = {}
-	bars.layer = "BORDER"
-	bars.color = {}
-	bars.color.r = 0.2
-	bars.color.g = 0.2
-	bars.color.b = 0.2
-	bars.color.a = tab.alpha
-	bars.thickness = 1.1
-	bars.w = tab.w
-	bars.h = bars.thickness
-	bars.align = "TOP"
-	bar.overlay.t = LOCCTexture(bar.overlay, bars)
-	bars.y = 0
-	bars.align = "BOTTOM"
-	bar.overlay.b = LOCCTexture(bar.overlay, bars)
-	bars.w = bars.thickness
-	bars.h = tab.h
-	bars.y = 0
-	bars.align = "LEFT"
-	bar.overlay.l = LOCCTexture(bar.overlay, bars)
-	bars.x = 0
-	bars.align = "RIGHT"
-	bar.overlay.r = LOCCTexture(bar.overlay, bars)
-	local perc = 10
-	local amount = 100 / perc
-	for i = 1, amount - 1 do
-		bars.x = tonumber(string.format("%.0f", (bar.overlay:GetWidth() / amount) * i) - (bars.thickness / 2))
-		bars.align = nil
-		bar.overlay[i] = LOCCTexture(bar.overlay, bars)
-	end
-
-	function bar:Hide()
-		bar.background:Hide()
-	end
-	function bar:Show()
-		bar.background:Show()
-	end
-
-	function bar:GetHeight()
-		return self.background:GetHeight()
-	end
-
-	function bar:SetHeight(h)
-		bar.background:SetHeight(h)
-		bar.bar:SetHeight(h)
-
-		bar.overlay:SetHeight(h)
-		bar.overlay.l:SetHeight(h)
-		bar.overlay.r:SetHeight(h)
-		for i = 1, amount - 1 do
-			bar.overlay[i]:SetHeight(h)
-		end
-		bar.overlay.text:SetFont(STANDARD_TEXT_FONT, tonumber(string.format("%.0f", h * 0.69)), "OUTLINE")
-		--bar.overlay.text:SetTextHeight(tonumber(string.format("%.0f", h * 0.69)))
-	end
-
-	function bar:GetWidth()
-		return self.background:GetWidth()
-	end
-
-	function bar:SetWidth(w)
-		w = LOCMathR(w, 0)
-		bar.background:SetWidth(w)
-
-		bar.overlay:SetWidth(w)
-		bar.overlay.t:SetWidth(w)
-		bar.overlay.b:SetWidth(w)
-		for i = 1, amount - 1 do
-			local x = tonumber(string.format("%.0f", (bar.overlay:GetWidth() / amount) * i) - (bars.thickness / 2))
-			bar.overlay[i]:SetPoint("TOPLEFT", bar.overlay, x, 0)
-		end
-	end
-
-	bar.overlay:EnableMouse()
-	bar.overlay:SetScript("OnEnter", function()
-		bar.overlay.text:Hide()
-	end)
-	bar.overlay:SetScript("OnLeave", function()
-		bar.overlay.text:Show()
-	end)
-
-	return bar
-end
-
-function LOCUpdateOptions()
+function LocMessages:UpdateOptions()
 	-- CHECKBOXES
 	for i, v in pairs(CBS) do
-		if LOCGetConfig(v.dbvalue) ~= nil then
-			v.ele:SetChecked(LOCGetConfig(v.dbvalue))
+		if LocMessages:GetConfig(v.dbvalue) ~= nil then
+			v.ele:SetChecked(LocMessages:GetConfig(v.dbvalue))
 		end
 	end
 end 

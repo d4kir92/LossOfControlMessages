@@ -1,23 +1,7 @@
 -- LIB Output
 
-function LOCmsg(str)
-	print("|c0000ffff" .. "[" .. "|cff8888ff" .. LOCname .. "|c0000ffff" .. "] " .. str)
-end
+local AddOnName, LocMessages = ...
 
-function LOCdeb(str)
-	if LOCDEBUG then
-		print("[DEB] " .. str)
-	end
-end
-
-function pTab(tab)
-	print("pTab", tab)
-	for i, v in pairs(tab) do
-		if type(v) == "table" then
-			pTab(v)
-		else
-			print(i, v)
-		end
-	end
-	print("----------------------------------")
+function LocMessages:MSG(str)
+	print("|c0000ffff" .. "[" .. "|cff8888ff" .. "LossOfControlMessages" .. "|c0000ffff" .. "] " .. str)
 end

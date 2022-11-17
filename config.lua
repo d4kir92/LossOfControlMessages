@@ -1,13 +1,12 @@
 -- Config
 
-LOCname = "LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t"
+local AddOnName, LocMessages = ...
 
 SetCVar("ScriptErrors", 1)
-LOCDEBUG = false
 
-LOCTABPC = LOCTABPC or {}
+function LocMessages:GetConfig(str, val)
+	LOCTABPC = LOCTABPC or {}
 
-function LOCGetConfig(str, val)
 	local setting = val
 	if LOCTABPC ~= nil then
 		if LOCTABPC[str] == nil then
