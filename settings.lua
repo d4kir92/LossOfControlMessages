@@ -238,6 +238,8 @@ function LocMessages:SetSetup( val )
 	LOCSETUP = val
 end
 
+
+SetCVar( "ScriptErrors", 1 )
 local vars = false
 local addo = false
 local frame = CreateFrame("FRAME")
@@ -253,6 +255,9 @@ function frame:OnEvent(event)
 	end
 	if vars and addo and not LOCloaded then
 		LOCloaded = true
+
+		SetCVar( "ScriptErrors", 1 )
+
 		C_Timer.After(0, function()
 			LocMessages:SetSetup( true )
 

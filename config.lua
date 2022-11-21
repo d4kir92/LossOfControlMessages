@@ -2,8 +2,6 @@
 
 local AddOnName, LocMessages = ...
 
-SetCVar("ScriptErrors", 1)
-
 function LocMessages:GetConfig(str, val)
 	LOCTABPC = LOCTABPC or {}
 
