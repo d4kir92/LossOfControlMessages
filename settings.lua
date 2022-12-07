@@ -4,13 +4,22 @@ local AddOnName, LocMessages = ...
 
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 
-LOCBUILD = "CLASSIC"
-if select(4, GetBuildInfo()) >= 100000 then
-	LOCBUILD = "RETAIL"
-elseif select(4, GetBuildInfo()) > 29999 then
-	LOCBUILD = "WRATH"
-elseif select(4, GetBuildInfo()) > 19999 then
-	LOCBUILD = "TBC"
+local BuildNr = select(4, GetBuildInfo())
+local Build = "CLASSIC"
+if BuildNr >= 100000 then
+	Build = "RETAIL"
+elseif BuildNr > 29999 then
+	Build = "WRATH"
+elseif BuildNr > 19999 then
+	Build = "TBC"
+end
+
+function LocMessages:GetWoWBuildNr()
+	return BuildNr
+end
+
+function LocMessages:GetWoWBuild()
+	return Build
 end
 
 function LocMessages:InitSetting()

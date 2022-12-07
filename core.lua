@@ -166,7 +166,7 @@ f_loc:SetScript("OnEvent", function(self, event, id)
 			end
 		elseif not tContains(LOCTypes, loctype) then
 			local gam = "CLASSIC"
-			if LOCBUILD ~= "CLASSIC" then
+			if LocMessages:GetWoWBuild() ~= "CLASSIC" then
 				gam = "RETAIL"
 			end
 			print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
