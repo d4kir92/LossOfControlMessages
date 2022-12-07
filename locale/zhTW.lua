@@ -13,3 +13,5 @@ L["suffix"] = "後置文字"
 L["printnothing"] = "不顯示任何東西"
 L["showinraids"] = "在團隊時顯示"
 L["showinbgs"] = "在戰場時顯示"
+
+L["channelchat"] = "Channel"

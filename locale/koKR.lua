@@ -13,3 +13,5 @@ L["suffix"] = "접미사"
 L["printnothing"] = "아무것도 출력하지 않음"
 L["showinraids"] = "공격대에서 표시"
 L["showinbgs"] = "전장에서 표시"
+
+L["channelchat"] = "Channel"

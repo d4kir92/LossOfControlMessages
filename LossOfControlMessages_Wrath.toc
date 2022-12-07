@@ -1,5 +1,5 @@
 ## Interface: 30400
-## Version: 1.0.17
+## Version: 1.0.18
 ## Title: LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t 
 ## Notes: Send to chat LOC messages
 ## Author: D4KiR
@@ -10,13 +10,11 @@
 ## X-Wago-ID: anKW5rNE
 
 # External Libs
-libs\!LibUIDropDownMenu\LibStub\LibStub.lua
-libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
+##libs\!LibUIDropDownMenu\LibStub\LibStub.lua
+##libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
+libs\LibStub\LibStub.lua
+libs\LibDropDown\embed.xml
 libs\AceLocale-3.0\AceLocale-3.0.xml
-
-libs/LIB_output.lua
-libs/LIB_math.lua
-libs/LIB_design.lua
 
 locale\enUS.lua
 locale\deDE.lua
@@ -27,6 +25,11 @@ locale\koKR.lua
 locale\ruRU.lua
 locale\zhCN.lua
 locale\zhTW.lua
+libs/LIB_lang.lua
+libs/LIB_output.lua
+libs/LIB_math.lua
+libs/LIB_design.lua
+libs/dropdown.lua
 
 config.lua
 

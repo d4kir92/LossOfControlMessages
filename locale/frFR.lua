@@ -13,3 +13,5 @@ L["suffix"] = "Suffixe"
 L["printnothing"] = "Print Nothing"
 L["showinraids"] = "Show in Raids"
 L["showinbgs"] = "Show in Battlegrounds"
+
+L["channelchat"] = "Channel"

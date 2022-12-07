@@ -2,8 +2,6 @@
 
 local AddOnName, LocMessages = ...
 
-local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
-
 local CBS = {}
 function LocMessages:CreateText(tab)
 	tab.textsize = tab.textsize or 12
@@ -89,25 +87,30 @@ function LocMessages:CreateComboBox(tab)
 	tab.x = tab.x or 0
 	tab.y = tab.y or 0
 
-	local CB = LibDD:Create_UIDropDownMenu(tab.name, tab.parent)
-	CB:SetPoint("TOPLEFT", tab.x, tab.y)
-
-	LibDD:UIDropDownMenu_Initialize(CB, function(self, level, menuList)
-		for i, channel in pairs(tab.tab) do
-			local info = LibDD:UIDropDownMenu_CreateInfo()
-			info.text, info.value, info.arg1 = channel.Name, channel.Code, i
-			info.func = function(self, arg1, arg2, checked)
-				LOCTABPC[tab.dbvalue] = self.value
-				LibDD:UIDropDownMenu_SetSelectedValue(CB, self.value);
-			end
-			LibDD:UIDropDownMenu_AddButton(info, level)
+	local t = {}
+	for i, v in pairs( tab.tab ) do
+		if v.Code then
+			tinsert(t, v.Code)
+		else
+			tinsert(t, v)
 		end
-	end)
+	end
 
-	LibDD:UIDropDownMenu_SetWidth(CB, 120)
-	LibDD:UIDropDownMenu_SetSelectedValue(CB, tab.value);
+	local rows = {
+		["name"] = tab.name,
+		["parent"]= tab.parent,
+		["title"] = tab.text,
+		["items"]= t,
+		["defaultVal"] = tab.value, 
+		["changeFunc"] = function( dropdown_frame, dropdown_val )
+			--dropdown_val = tonumber( dropdown_val )
+			LOCTAB[tab.dbvalue] = dropdown_val
+		end
+	}
+	local DD = LocMessages:CreateDropdown( rows )
+	DD:SetPoint( "TOPLEFT", tab.parent, "TOPLEFT", tab.x, tab.y )
 
-	return CB
+	return DD
 end
 
 function LocMessages:CreateSlider(tab)

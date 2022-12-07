@@ -14,4 +14,5 @@ L["printnothing"] = "No imprimir nada"
 L["showinraids"] = "Mostrar en Raid"
 L["showinbgs"] = "Mostrar en Campos de Batalla"
 
+L["channelchat"] = "Channel"
 

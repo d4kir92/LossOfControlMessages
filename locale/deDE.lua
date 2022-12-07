@@ -13,3 +13,5 @@ L["suffix"] = "Suffix"
 L["printnothing"] = "Nichts Schreiben"
 L["showinraids"] = "In Schlachtzügen anzeigen"
 L["showinbgs"] = "In Schlachtfeldern anzeigen"
+
+L["channelchat"] = "Channel"
