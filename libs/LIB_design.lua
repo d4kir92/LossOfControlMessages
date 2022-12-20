@@ -104,7 +104,9 @@ function LocMessages:CreateComboBox(tab)
 		["defaultVal"] = tab.value, 
 		["changeFunc"] = function( dropdown_frame, dropdown_val )
 			--dropdown_val = tonumber( dropdown_val )
-			LOCTAB[tab.dbvalue] = dropdown_val
+			if LOCTAB and tab.dbvalue and dropdown_val then
+				LOCTAB[tab.dbvalue] = dropdown_val
+			end
 		end
 	}
 	local DD = LocMessages:CreateDropdown( rows )
