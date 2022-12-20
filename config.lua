@@ -4,7 +4,8 @@ local AddOnName, LocMessages = ...
 
 function LocMessages:GetConfig(str, val)
 	LOCTABPC = LOCTABPC or {}
-
+	LOCTAB = LOCTAB or {}
+	
 	local setting = val
 	if LOCTABPC ~= nil then
 		if LOCTABPC[str] == nil then

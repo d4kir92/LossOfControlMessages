@@ -86,6 +86,8 @@ function LocMessages:CreateComboBox(tab)
 	tab.tooltip = tab.tooltip or ""
 	tab.x = tab.x or 0
 	tab.y = tab.y or 0
+	
+	LOCTAB = LOCTAB or {}
 
 	local t = {}
 	for i, v in pairs( tab.tab ) do
