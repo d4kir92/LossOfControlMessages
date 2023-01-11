@@ -15,3 +15,5 @@ L["showinraids"] = "在團隊時顯示"
 L["showinbgs"] = "在戰場時顯示"
 
 L["channelchat"] = "Channel"
+
+L["onlyasheal"] = "Only Show when role is Healer"

@@ -54,6 +54,17 @@ function LocMessages:InitSetting()
 	LocMessages:CreateCheckBox(settings_printnothing)
 	Y = Y - BR
 
+	local settings_onlyasheal = {}
+	settings_onlyasheal.name = "onlyasheal"
+	settings_onlyasheal.parent = LOCTAB_Settings.panel
+	settings_onlyasheal.checked = LocMessages:GetConfig("onlyasheal", false)
+	settings_onlyasheal.text = L["onlyasheal"]
+	settings_onlyasheal.x = 10
+	settings_onlyasheal.y = Y
+	settings_onlyasheal.dbvalue = "onlyasheal"
+	LocMessages:CreateCheckBox(settings_onlyasheal)
+	Y = Y - BR
+
 	local settings_showinraids = {}
 	settings_showinraids.name = "showinraids"
 	settings_showinraids.parent = LOCTAB_Settings.panel

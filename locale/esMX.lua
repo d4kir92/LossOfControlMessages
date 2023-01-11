@@ -16,3 +16,5 @@ L["showinbgs"] = "Mostrar en Campos de Batalla"
 
 L["channelchat"] = "Channel"
 
+L["onlyasheal"] = "Only Show when role is Healer"
+

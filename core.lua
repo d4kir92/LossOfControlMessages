@@ -15,6 +15,17 @@ end
 function LocMessages:ToCurrentChat(msg)
 	local _channel = "SAY"
 	local inInstance, instanceType = IsInInstance()
+	local role = ""
+
+	if GetSpecialization and GetSpecializationRole then
+		local id = GetSpecialization()
+		if id ~= nil then
+			role = GetSpecializationRole( id )
+		end
+	end
+	if UnitGroupRolesAssigned then
+		role = UnitGroupRolesAssigned( "PLAYER" )
+	end
 
 	if LocMessages:GetConfig("channelchat", "AUTO") == "AUTO" then
 		if IsInRaid(LE_PARTY_CATEGORY_HOME) then
@@ -51,7 +62,7 @@ function LocMessages:ToCurrentChat(msg)
 			-- dont print in raid
 		elseif (_channel == "SAY" or _channel == "YELL") and not inInstance then
 			-- ERROR: SAY and YELL only works in instance
-		else
+		elseif not LocMessages:GetConfig("onlyasheal", false) or ( LocMessages:GetConfig("onlyasheal", false) and role == "HEALER" ) then
 			if mes ~= nil then
 				SendChatMessage(mes, _channel)
 			end

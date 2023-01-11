@@ -15,3 +15,5 @@ L["showinraids"] = "In Schlachtzügen anzeigen"
 L["showinbgs"] = "In Schlachtfeldern anzeigen"
 
 L["channelchat"] = "Channel"
+
+L["onlyasheal"] = "Nur anzeigen, wenn die Rolle Heiler ist"

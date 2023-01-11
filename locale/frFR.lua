@@ -15,3 +15,5 @@ L["showinraids"] = "Show in Raids"
 L["showinbgs"] = "Show in Battlegrounds"
 
 L["channelchat"] = "Channel"
+
+L["onlyasheal"] = "Only Show when role is Healer"
