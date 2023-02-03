@@ -65,6 +65,17 @@ function LocMessages:InitSetting()
 	LocMessages:CreateCheckBox(settings_onlyasheal)
 	Y = Y - BR
 
+	local settings_showinarenas = {}
+	settings_showinarenas.name = "showinarenas"
+	settings_showinarenas.parent = LOCTAB_Settings.panel
+	settings_showinarenas.checked = LocMessages:GetConfig("showinarenas", true)
+	settings_showinarenas.text = L["showinarenas"]
+	settings_showinarenas.x = 10
+	settings_showinarenas.y = Y
+	settings_showinarenas.dbvalue = "showinarenas"
+	LocMessages:CreateCheckBox(settings_showinarenas)
+	Y = Y - BR
+
 	local settings_showinraids = {}
 	settings_showinraids.name = "showinraids"
 	settings_showinraids.parent = LOCTAB_Settings.panel

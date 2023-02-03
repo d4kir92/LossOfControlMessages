@@ -11,6 +11,7 @@ L["prefix"] = "접두사"
 L["suffix"] = "접미사"
 
 L["printnothing"] = "아무것도 출력하지 않음"
+L["showinarenas"] = "Show in Arenas"
 L["showinraids"] = "공격대에서 표시"
 L["showinbgs"] = "전장에서 표시"
 

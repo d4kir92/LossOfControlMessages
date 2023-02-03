@@ -11,6 +11,7 @@ L["prefix"] = "Prefijo"
 L["suffix"] = "Sufijo"
 
 L["printnothing"] = "Print Nothing"
+L["showinarenas"] = "Show in Arenas"
 L["showinraids"] = "Show in Raids"
 L["showinbgs"] = "Show in Battlegrounds"
 

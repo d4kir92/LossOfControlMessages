@@ -54,11 +54,17 @@ function LocMessages:ToCurrentChat(msg)
 	end
 	local mes = prefix .. msg .. suffix
 	if GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL" then
+		local inArena = IsActiveBattlefieldArena and IsActiveBattlefieldArena()
+		local inBg = (inArena == nil or inArena == false) and UnitInBattleground("player")
+		local inRaid = UnitInRaid("player")
+
 		if LocMessages:GetConfig("printnothing", false) == true then
 			-- print nothing
-		elseif UnitInBattleground("player") ~= nil and LocMessages:GetConfig("showinbgs", false) == false then
+		elseif inArena and LocMessages:GetConfig("showinarenas", true) == false then
+			-- print nothing
+		elseif inBg and LocMessages:GetConfig("showinbgs", false) == false then
 			-- dont print in bg
-		elseif UnitInRaid("player") ~= nil and LocMessages:GetConfig("showinraids", false) == false then
+		elseif inRaid and LocMessages:GetConfig("showinraids", false) == false then
 			-- dont print in raid
 		elseif (_channel == "SAY" or _channel == "YELL") and not inInstance then
 			-- ERROR: SAY and YELL only works in instance

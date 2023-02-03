@@ -11,6 +11,7 @@ L["prefix"] = "Префикс"
 L["suffix"] = "Суффикс"
 
 L["printnothing"] = "Ничего не печатать"
+L["showinarenas"] = "Show in Arenas"
 L["showinraids"] = "Показать в рейде"
 L["showinbgs"] = "Показывать на поле битвы"
 

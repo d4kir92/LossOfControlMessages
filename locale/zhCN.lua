@@ -11,6 +11,7 @@ L["prefix"] = "前缀"
 L["suffix"] = "后缀"
 
 L["printnothing"] = "不显示任何东西"
+L["showinarenas"] = "Show in Arenas"
 L["showinraids"] = "在团队时显示"
 L["showinbgs"] = "在战场时显示"
 

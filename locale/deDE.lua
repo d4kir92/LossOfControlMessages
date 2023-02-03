@@ -11,6 +11,7 @@ L["prefix"] = "Präfix"
 L["suffix"] = "Suffix"
 
 L["printnothing"] = "Nichts Schreiben"
+L["showinarenas"] = "In Arenas anzeigen"
 L["showinraids"] = "In Schlachtzügen anzeigen"
 L["showinbgs"] = "In Schlachtfeldern anzeigen"
 
