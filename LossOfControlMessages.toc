@@ -3,7 +3,7 @@
 ## Interface-Wrath: 30401
 ## Interface: 100007
 
-## Version: 1.0.27
+## Version: 1.0.28
 ## Title: LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t 
 ## Notes: Send to chat LOC messages
 ## Author: D4KiR
