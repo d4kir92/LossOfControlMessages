@@ -99,11 +99,12 @@ local locs = {}
 local f_loc = CreateFrame("FRAME")
 f_loc.past = {}
 
-f_loc:SetScript("OnEvent", function(self, event, id)
+f_loc:SetScript("OnEvent", function(self, event, unitToken, eventIndex, ...)
 	local loctype, text, duration, spellID, dispelType
+	if eventIndex == nil then return end
 
 	if C_LossOfControl.GetEventInfo ~= nil then
-		loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(id) --C_LossOfControl.GetEventInfo(id)
+		loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
 	elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
 		local tab = C_LossOfControl.GetActiveLossOfControlData(id)
 		loctype = tab["locType"]
@@ -114,7 +115,6 @@ f_loc:SetScript("OnEvent", function(self, event, id)
 		print("[LOC] FAILED - API not found")
 	end
 
-	--print( GetSpellInfo( spellID ) )
 	dispelType = LOCGetSchoolType(spellID)
 
 	if loctype ~= nil and duration ~= nil then
