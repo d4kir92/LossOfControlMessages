@@ -106,7 +106,7 @@ f_loc:SetScript("OnEvent", function(self, event, unitToken, eventIndex, ...)
 	if C_LossOfControl.GetEventInfo ~= nil then
 		loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
 	elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
-		local tab = C_LossOfControl.GetActiveLossOfControlData(id)
+		local tab = C_LossOfControl.GetActiveLossOfControlData(eventIndex)
 		loctype = tab["locType"]
 		text = tab["displayText"]
 		duration = tab["duration"]
