@@ -101,6 +101,12 @@ f_loc.past = {}
 
 f_loc:SetScript("OnEvent", function(self, event, unitToken, eventIndex, ...)
 	local loctype, text, duration, spellID, dispelType
+
+	-- fix for old one
+	if eventIndex == nil then
+		eventIndex = unitToken
+	end
+
 	if eventIndex == nil then return end
 
 	if C_LossOfControl.GetEventInfo ~= nil then
