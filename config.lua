@@ -3,7 +3,6 @@ local _, LocMessages = ...
 
 function LocMessages:GetConfig(str, val)
 	LOCTABPC = LOCTABPC or {}
-	LOCTAB = LOCTAB or {}
 	local setting = val
 
 	if LOCTABPC ~= nil then

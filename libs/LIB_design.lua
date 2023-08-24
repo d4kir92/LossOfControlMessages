@@ -84,7 +84,6 @@ function LocMessages:CreateComboBox(tab)
 	tab.tooltip = tab.tooltip or ""
 	tab.x = tab.x or 0
 	tab.y = tab.y or 0
-	LOCTAB = LOCTAB or {}
 	local t = {}
 
 	for i, v in pairs(tab.tab) do
@@ -103,8 +102,8 @@ function LocMessages:CreateComboBox(tab)
 		["defaultVal"] = tab.value,
 		["changeFunc"] = function(dropdown_frame, dropdown_val)
 			--dropdown_val = tonumber( dropdown_val )
-			if LOCTAB and tab.dbvalue and dropdown_val then
-				LOCTAB[tab.dbvalue] = dropdown_val
+			if LOCTABPC and tab.dbvalue and dropdown_val then
+				LOCTABPC[tab.dbvalue] = dropdown_val
 			end
 		end
 	}
