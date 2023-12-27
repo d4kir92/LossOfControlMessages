@@ -1,28 +1,27 @@
 -- By D4KiR
 local _, LocMessages = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
-
 function LocMessages:AllowedTo()
 	local _channel = LocMessages:GetConfig("channelchat", "AUTO")
-	if (GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL") and LocMessages:GetConfig("printnothing", false) == false then return true end
+	if (GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0) and LocMessages:GetConfig("printnothing", false) == false then return true end
 
 	return false
 end
 
 function LocMessages:ToCurrentChat(msg)
-	local _channel = "SAY"
+	local _channel = "AUTO"
 	local inInstance, _ = IsInInstance()
 	local role = ""
-
 	if GetSpecialization and GetSpecializationRole then
 		local id = GetSpecialization()
-
 		if id ~= nil then
 			role = GetSpecializationRole(id)
 		end
 	end
 
-	if UnitGroupRolesAssigned then
+	local canUseRole = false
+	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
+		canUseRole = true
 		role = UnitGroupRolesAssigned("PLAYER")
 	end
 
@@ -40,7 +39,6 @@ function LocMessages:ToCurrentChat(msg)
 
 	local prefix = LocMessages:GetConfig("prefix", "[LOC]")
 	local suffix = LocMessages:GetConfig("suffix", "")
-
 	if prefix ~= "" and prefix ~= " " then
 		prefix = prefix .. " "
 	elseif prefix == " " then
@@ -54,18 +52,16 @@ function LocMessages:ToCurrentChat(msg)
 	end
 
 	local mes = prefix .. msg .. suffix
-
-	if GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 or _channel == "SAY" or _channel == "YELL" then
+	if GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0 then
 		local inArena = IsActiveBattlefieldArena and IsActiveBattlefieldArena()
 		local inBg = (inArena == nil or inArena == false) and UnitInBattleground("player")
 		local inRaid = UnitInRaid("player")
-
 		if LocMessages:GetConfig("printnothing", false) == true then
 		elseif inArena and LocMessages:GetConfig("showinarenas", true) == false then
 		elseif inBg and LocMessages:GetConfig("showinbgs", false) == false then
 		elseif inRaid and LocMessages:GetConfig("showinraids", false) == false then
-		elseif (_channel == "SAY" or _channel == "YELL") and not inInstance then
-		elseif not LocMessages:GetConfig("onlyasheal", false) or (LocMessages:GetConfig("onlyasheal", false) and role == "HEALER") then
+		elseif not inInstance and LocMessages:GetConfig("showoutsideofinstance", false) == false then
+		elseif (canUseRole == false) or not LocMessages:GetConfig("onlyasheal", false) or (LocMessages:GetConfig("onlyasheal", false) and role == "HEALER") then
 			if mes ~= nil then
 				SendChatMessage(mes, _channel)
 			end
@@ -79,9 +75,12 @@ function LocMessages:SetupLOC()
 			LocMessages:SetSetup(false)
 			LocMessages:InitSetting()
 		else
-			C_Timer.After(0.1, function()
-				LocMessages:SetupLOC()
-			end)
+			C_Timer.After(
+				0.1,
+				function()
+					LocMessages:SetupLOC()
+				end
+			)
 		end
 	end
 end
@@ -98,95 +97,87 @@ end
 local locs = {}
 local f_loc = CreateFrame("FRAME")
 f_loc.past = {}
-
-f_loc:SetScript("OnEvent", function(self, event, unitToken, eventIndex, ...)
-	local loctype, text, duration, spellID, dispelType
-
-	-- fix for old one
-	if eventIndex == nil then
-		eventIndex = unitToken
-	end
-
-	if eventIndex == nil then return end
-
-	if C_LossOfControl.GetEventInfo ~= nil then
-		loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
-	elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
-		local tab = C_LossOfControl.GetActiveLossOfControlData(eventIndex)
-		loctype = tab["locType"]
-		text = tab["displayText"]
-		duration = tab["duration"]
-		spellID = tab["spellID"]
-	else
-		print("[LOC] FAILED - API not found")
-	end
-
-	dispelType = LOCGetSchoolType(spellID)
-
-	if loctype ~= nil and duration ~= nil then
-		if dispelType then
-			dispelType = string.upper(dispelType)
-
-			if LocMessages:GetConfig("showdispelltype", true) then
-				text = text .. " [" .. dispelType .. "]"
-			end
+f_loc:SetScript(
+	"OnEvent",
+	function(self, event, unitToken, eventIndex, ...)
+		local loctype, text, duration, spellID, dispelType
+		-- fix for old one
+		if eventIndex == nil then
+			eventIndex = unitToken
 		end
 
-		local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
+		if eventIndex == nil then return end
+		if C_LossOfControl.GetEventInfo ~= nil then
+			loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
+		elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
+			local tab = C_LossOfControl.GetActiveLossOfControlData(eventIndex)
+			loctype = tab["locType"]
+			text = tab["displayText"]
+			duration = tab["duration"]
+			spellID = tab["spellID"]
+		else
+			print("[LOC] FAILED - API not found")
+		end
 
-		if tContains(LOCTypes, loctype) and duration ~= nil then
-			-- Safe LOCTYPE
-			if locs[text] ~= nil then
-				if locs[text] < GetTime() then
-					locs[text] = nil
-				elseif locs[text] > GetTime() then
-					return
+		dispelType = LOCGetSchoolType(spellID)
+		if loctype ~= nil and duration ~= nil then
+			if dispelType then
+				dispelType = string.upper(dispelType)
+				if LocMessages:GetConfig("showdispelltype", true) then
+					text = text .. " [" .. dispelType .. "]"
 				end
-			else
-				locs[text] = GetTime() + duration
 			end
 
-			if text and (not self.past[text] or GetTime() > self.past[text]) and LocMessages:GetConfig(string.lower(loctype), false) and not LocMessages:GetConfig("printnothing", false) and loctype ~= "NONE" then
-				self.past[text] = GetTime() + duration
+			local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
+			if tContains(LOCTypes, loctype) and duration ~= nil then
+				-- Safe LOCTYPE
+				if locs[text] ~= nil then
+					if locs[text] < GetTime() then
+						locs[text] = nil
+					elseif locs[text] > GetTime() then
+						return
+					end
+				else
+					locs[text] = GetTime() + duration
+				end
 
-				if LocMessages:GetConfig("showlocchat", true) and LocMessages:AllowedTo() then
-					local loctypePrefix = LocMessages:GetConfig("prefix_" .. loctype, "")
+				if text and (not self.past[text] or GetTime() > self.past[text]) and LocMessages:GetConfig(string.lower(loctype), false) and not LocMessages:GetConfig("printnothing", false) and loctype ~= "NONE" then
+					self.past[text] = GetTime() + duration
+					if LocMessages:GetConfig("showlocchat", true) and LocMessages:AllowedTo() then
+						local loctypePrefix = LocMessages:GetConfig("prefix_" .. loctype, "")
+						if loctypePrefix ~= "" then
+							text = loctypePrefix .. " " .. text
+						end
 
-					if loctypePrefix ~= "" then
-						text = loctypePrefix .. " " .. text
+						local loctypeSuffix = LocMessages:GetConfig("suffix_" .. loctype, "")
+						if loctypeSuffix ~= "" then
+							text = text .. " " .. loctypeSuffix
+						end
+
+						LocMessages:ToCurrentChat(string.format(L["loctext"], text, LocMessages:MathR(duration, 1)))
 					end
 
-					local loctypeSuffix = LocMessages:GetConfig("suffix_" .. loctype, "")
-
-					if loctypeSuffix ~= "" then
-						text = text .. " " .. loctypeSuffix
+					if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() then
+						DoEmote("helpme")
 					end
-
-					LocMessages:ToCurrentChat(string.format(L["loctext"], text, LocMessages:MathR(duration, 1)))
+				end
+			elseif not tContains(LOCTypes, loctype) then
+				local gam = "CLASSIC"
+				if LocMessages:GetWoWBuild() ~= "CLASSIC" then
+					gam = "RETAIL"
 				end
 
-				if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() then
-					DoEmote("helpme")
-				end
+				print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
+				print("Missing LOC Type: " .. loctype .. " text: " .. text)
+				print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
 			end
-		elseif not tContains(LOCTypes, loctype) then
-			local gam = "CLASSIC"
-
-			if LocMessages:GetWoWBuild() ~= "CLASSIC" then
-				gam = "RETAIL"
-			end
-
-			print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
-			print("Missing LOC Type: " .. loctype .. " text: " .. text)
-			print("[SEND THIS TO THE DEV OF: " .. "LossOfControlMessages" .. "] [" .. gam .. "]")
 		end
 	end
-end)
+)
 
 f_loc:RegisterEvent("LOSS_OF_CONTROL_ADDED")
 -- CMDS --
 local cmds = {}
-
 cmds["!loc"] = function()
 	LocMessages:MSG("------------------------------------------")
 	LocMessages:MSG("!loc help => Shows Help Text")
@@ -196,7 +187,6 @@ cmds["!loc"] = function()
 end
 
 cmds["!loc help"] = cmds["!loc"]
-
 cmds["!loc off"] = function()
 	LocMessages:GetConfig("printnothing", true)
 	LOCTABPC["printnothing"] = true

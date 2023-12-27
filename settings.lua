@@ -3,7 +3,6 @@ local _, LocMessages = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 local BuildNr = select(4, GetBuildInfo())
 local Build = "CLASSIC"
-
 if BuildNr >= 100000 then
 	Build = "RETAIL"
 elseif BuildNr > 29999 then
@@ -48,16 +47,19 @@ function LocMessages:InitSetting()
 	settings_printnothing.dbvalue = "printnothing"
 	LocMessages:CreateCheckBox(settings_printnothing)
 	Y = Y - BR
-	local settings_onlyasheal = {}
-	settings_onlyasheal.name = "onlyasheal"
-	settings_onlyasheal.parent = LOCTAB_Settings.panel
-	settings_onlyasheal.checked = LocMessages:GetConfig("onlyasheal", false)
-	settings_onlyasheal.text = L["onlyasheal"]
-	settings_onlyasheal.x = 10
-	settings_onlyasheal.y = Y
-	settings_onlyasheal.dbvalue = "onlyasheal"
-	LocMessages:CreateCheckBox(settings_onlyasheal)
-	Y = Y - BR
+	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
+		local settings_onlyasheal = {}
+		settings_onlyasheal.name = "onlyasheal"
+		settings_onlyasheal.parent = LOCTAB_Settings.panel
+		settings_onlyasheal.checked = LocMessages:GetConfig("onlyasheal", false)
+		settings_onlyasheal.text = L["onlyasheal"]
+		settings_onlyasheal.x = 10
+		settings_onlyasheal.y = Y
+		settings_onlyasheal.dbvalue = "onlyasheal"
+		LocMessages:CreateCheckBox(settings_onlyasheal)
+		Y = Y - BR
+	end
+
 	local settings_showinarenas = {}
 	settings_showinarenas.name = "showinarenas"
 	settings_showinarenas.parent = LOCTAB_Settings.panel
@@ -78,6 +80,16 @@ function LocMessages:InitSetting()
 	settings_showinraids.dbvalue = "showinraids"
 	LocMessages:CreateCheckBox(settings_showinraids)
 	Y = Y - BR
+	local settings_showoutsideofinstance = {}
+	settings_showoutsideofinstance.name = "showoutsideofinstance"
+	settings_showoutsideofinstance.parent = LOCTAB_Settings.panel
+	settings_showoutsideofinstance.checked = LocMessages:GetConfig("showoutsideofinstance", false)
+	settings_showoutsideofinstance.text = L["showoutsideofinstance"]
+	settings_showoutsideofinstance.x = 10
+	settings_showoutsideofinstance.y = Y
+	settings_showoutsideofinstance.dbvalue = "showoutsideofinstance"
+	LocMessages:CreateCheckBox(settings_showoutsideofinstance)
+	Y = Y - DR
 	local settings_showinbgs = {}
 	settings_showinbgs.name = "showinbgs"
 	settings_showinbgs.parent = LOCTAB_Settings.panel
@@ -127,7 +139,6 @@ function LocMessages:InitSetting()
 	settings_channel.x = 0
 	settings_channel.y = Y
 	settings_channel.dbvalue = "channelchat"
-
 	settings_channel.tab = {
 		{
 			Name = "Auto",
@@ -146,21 +157,13 @@ function LocMessages:InitSetting()
 			Code = "RAID_WARNING"
 		},
 		{
-			Name = "Say",
-			Code = "SAY"
-		},
-		{
-			Name = "Yell",
-			Code = "YELL"
-		},
-		{
 			Name = "Instance Chat",
 			Code = "INSTANCE_CHAT"
 		}
 	}
 
 	LocMessages:CreateComboBox(settings_channel)
-	local settings_showtranslation = {}
+	--[[local settings_showtranslation = {}
 	settings_showtranslation.name = "showtranslation"
 	settings_showtranslation.parent = LOCTAB_Settings.panel
 	settings_showtranslation.checked = LocMessages:GetConfig("showtranslation", true)
@@ -168,7 +171,7 @@ function LocMessages:InitSetting()
 	settings_showtranslation.x = 210
 	settings_showtranslation.y = Y
 	settings_showtranslation.dbvalue = "showtranslation"
-	LocMessages:CreateCheckBox(settings_showtranslation)
+	LocMessages:CreateCheckBox(settings_showtranslation)]]
 	Y = Y - SR
 	local settings_prefix = {}
 	settings_prefix.name = "prefix"
@@ -189,9 +192,7 @@ function LocMessages:InitSetting()
 	settings_suffix.dbvalue = "suffix"
 	LocMessages:CreateTextBox(settings_suffix)
 	Y = Y - BR
-
 	local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
-
 	for i, v in pairs(LOCTypes) do
 		local prefix = {}
 		prefix.name = "prefix"
@@ -218,13 +219,11 @@ function LocMessages:InitSetting()
 	local LX = 300
 	local LY = -46
 	local c = 0
-
 	for i, loctype in pairs(LOCTypes) do
 		loctype = string.lower(loctype)
 		local settings_logtest = {}
 		settings_logtest.name = loctype
 		settings_logtest.parent = LOCTAB_Settings.panel
-
 		if loctype == "disarm" then
 			settings_logtest.checked = LocMessages:GetConfig(loctype, false)
 		else
@@ -238,7 +237,6 @@ function LocMessages:InitSetting()
 		LocMessages:CreateCheckBox(settings_logtest)
 		LY = LY - 16
 		c = c + 1
-
 		if c == 7 then
 			c = 0
 			LX = LX + 160
@@ -251,7 +249,6 @@ end
 
 local LOCloaded = false
 local LOCSETUP = false
-
 function LocMessages:GetSetup()
 	return LOCSETUP
 end
@@ -266,7 +263,6 @@ local frame = CreateFrame("FRAME")
 frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("VARIABLES_LOADED")
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-
 function frame:OnEvent(event)
 	if event == "VARIABLES_LOADED" then
 		vars = true
@@ -278,11 +274,13 @@ function frame:OnEvent(event)
 
 	if vars and addo and not LOCloaded then
 		LOCloaded = true
-
-		C_Timer.After(0, function()
-			LocMessages:SetSetup(true)
-			LocMessages:SetupLOC()
-		end)
+		C_Timer.After(
+			0,
+			function()
+				LocMessages:SetSetup(true)
+				LocMessages:SetupLOC()
+			end
+		)
 	end
 end
 
