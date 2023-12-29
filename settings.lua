@@ -89,6 +89,16 @@ function LocMessages:InitSetting()
 	settings_showoutsideofinstance.y = Y
 	settings_showoutsideofinstance.dbvalue = "showoutsideofinstance"
 	LocMessages:CreateCheckBox(settings_showoutsideofinstance)
+	Y = Y - BR
+	local settings_showinenglishonly = {}
+	settings_showinenglishonly.name = "showinenglishonly"
+	settings_showinenglishonly.parent = LOCTAB_Settings.panel
+	settings_showinenglishonly.checked = LocMessages:GetConfig("showinenglishonly", false)
+	settings_showinenglishonly.text = L["showinenglishonly"]
+	settings_showinenglishonly.x = 10
+	settings_showinenglishonly.y = Y
+	settings_showinenglishonly.dbvalue = "showinenglishonly"
+	LocMessages:CreateCheckBox(settings_showinenglishonly)
 	Y = Y - DR
 	local settings_showinbgs = {}
 	settings_showinbgs.name = "showinbgs"

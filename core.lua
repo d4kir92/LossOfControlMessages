@@ -94,6 +94,24 @@ local function LOCGetSchoolType(sid)
 	return nil
 end
 
+local LOCTypes = {"CHARM", "CONFUSE", "DISARM", "FEAR", "FEAR_MECHANIC", "NONE", "PACIFY", "PACIFYSILENCE", "ROOT", "SCHOOL_INTERRUPT", "SILENCE", "STUN", "STUN_MECHANIC"}
+local locsEng = {
+	["CHARM"] = "Charmed",
+	["CONFUSE"] = "Confused",
+	["DISARM"] = "Disarmed",
+	["FEAR"] = "Feared",
+	["FEAR_MECHANIC"] = "Feared",
+	["NONE"] = "None",
+	["PACIFY"] = "Pacified",
+	["PACIFYSILENCE"] = "Disabled",
+	["ROOT"] = "Rooted",
+	["SCHOOL_INTERRUPT"] = "Interrupted",
+	["SILENCE"] = "Silenced",
+	["STUN"] = "Stunned",
+	["STUN_MECHANIC"] = "Stunned",
+}
+
+local locEng = "%s (For %i seconds)"
 local locs = {}
 local f_loc = CreateFrame("FRAME")
 f_loc.past = {}
@@ -120,6 +138,18 @@ f_loc:SetScript(
 		end
 
 		dispelType = LOCGetSchoolType(spellID)
+		if LocMessages:GetConfig("showinenglishonly", false) and text ~= nil and loctype ~= nil then
+			if locsEng[loctype] then
+				if dispelType ~= nil then
+					dispelType = locsEng[loctype]
+				end
+
+				text = locsEng[loctype]
+			else
+				LocMessages:MSG(format("MISSING TRANSLATION FOR %s", loctype))
+			end
+		end
+
 		if loctype ~= nil and duration ~= nil then
 			if dispelType then
 				dispelType = string.upper(dispelType)
@@ -128,7 +158,6 @@ f_loc:SetScript(
 				end
 			end
 
-			local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 			if tContains(LOCTypes, loctype) and duration ~= nil then
 				-- Safe LOCTYPE
 				if locs[text] ~= nil then
@@ -154,7 +183,11 @@ f_loc:SetScript(
 							text = text .. " " .. loctypeSuffix
 						end
 
-						LocMessages:ToCurrentChat(string.format(L["loctext"], text, LocMessages:MathR(duration, 1)))
+						if LocMessages:GetConfig("showinenglishonly", false) then
+							LocMessages:ToCurrentChat(string.format(locEng, text, LocMessages:MathR(duration, 1)))
+						else
+							LocMessages:ToCurrentChat(string.format(L["loctext"], text, LocMessages:MathR(duration, 1)))
+						end
 					end
 
 					if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() then
