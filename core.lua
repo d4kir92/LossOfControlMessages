@@ -151,7 +151,7 @@ f_loc:SetScript(
 		end
 
 		if loctype ~= nil and duration ~= nil then
-			if dispelType then
+			if dispelType ~= nil and string.lower(text) ~= string.lower(dispelType) then
 				dispelType = string.upper(dispelType)
 				if LocMessages:GetConfig("showdispelltype", true) then
 					text = text .. " [" .. dispelType .. "]"
