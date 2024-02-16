@@ -94,7 +94,7 @@ local function LOCGetSchoolType(sid)
 	return nil
 end
 
-local LOCTypes = {"CHARM", "CONFUSE", "DISARM", "FEAR", "FEAR_MECHANIC", "NONE", "PACIFY", "PACIFYSILENCE", "ROOT", "SCHOOL_INTERRUPT", "SILENCE", "STUN", "STUN_MECHANIC"}
+local LOCTypes = {"CHARM", "CONFUSE", "DISARM", "FEAR", "FEAR_MECHANIC", "NONE", "PACIFY", "PACIFYSILENCE", "POSSESS", "ROOT", "SCHOOL_INTERRUPT", "SILENCE", "STUN", "STUN_MECHANIC"}
 local locsEng = {
 	["CHARM"] = "Charmed",
 	["CONFUSE"] = "Confused",
@@ -104,6 +104,7 @@ local locsEng = {
 	["NONE"] = "None",
 	["PACIFY"] = "Pacified",
 	["PACIFYSILENCE"] = "Disabled",
+	["POSSESS"] = "Possessed",
 	["ROOT"] = "Rooted",
 	["SCHOOL_INTERRUPT"] = "Interrupted",
 	["SILENCE"] = "Silenced",
