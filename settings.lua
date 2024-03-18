@@ -1,27 +1,9 @@
 -- By D4KiR
 local AddonName, LocMessages = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
-local BuildNr = select(4, GetBuildInfo())
-local Build = "CLASSIC"
-if BuildNr >= 100000 then
-	Build = "RETAIL"
-elseif BuildNr > 29999 then
-	Build = "WRATH"
-elseif BuildNr > 19999 then
-	Build = "TBC"
-end
-
-function D4:GetWoWBuildNr()
-	return BuildNr
-end
-
-function D4:GetWoWBuild()
-	return Build
-end
-
 function LocMessages:InitSetting()
 	local LOCTAB_Settings = {}
-	D4:SetVersion(AddonName, 135860, "1.2.13")
+	D4:SetVersion(AddonName, 135860, "1.2.14")
 	LOCTAB_Settings.panel = CreateFrame("Frame", "LOCTAB_Settings", UIParent)
 	LOCTAB_Settings.panel.name = "LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t"
 	local BR = 16
