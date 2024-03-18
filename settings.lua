@@ -11,17 +11,17 @@ elseif BuildNr > 19999 then
 	Build = "TBC"
 end
 
-function LocMessages:GetWoWBuildNr()
+function D4:GetWoWBuildNr()
 	return BuildNr
 end
 
-function LocMessages:GetWoWBuild()
+function D4:GetWoWBuild()
 	return Build
 end
 
 function LocMessages:InitSetting()
 	local LOCTAB_Settings = {}
-	D4:SetVersion(AddonName, 135860, "1.2.12")
+	D4:SetVersion(AddonName, 135860, "1.2.13")
 	LOCTAB_Settings.panel = CreateFrame("Frame", "LOCTAB_Settings", UIParent)
 	LOCTAB_Settings.panel.name = "LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t"
 	local BR = 16
@@ -48,7 +48,7 @@ function LocMessages:InitSetting()
 	settings_printnothing.dbvalue = "printnothing"
 	LocMessages:CreateCheckBox(settings_printnothing)
 	Y = Y - BR
-	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
+	if UnitGroupRolesAssigned and D4:GetWoWBuildNr() > 19999 then
 		local settings_onlyasheal = {}
 		settings_onlyasheal.name = "onlyasheal"
 		settings_onlyasheal.parent = LOCTAB_Settings.panel

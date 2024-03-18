@@ -20,7 +20,7 @@ function LocMessages:ToCurrentChat(msg)
 	end
 
 	local canUseRole = false
-	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
+	if UnitGroupRolesAssigned and D4:GetWoWBuildNr() > 19999 then
 		canUseRole = true
 		role = UnitGroupRolesAssigned("PLAYER")
 	end
@@ -197,7 +197,7 @@ f_loc:SetScript(
 				end
 			elseif not tContains(LOCTypes, loctype) then
 				local gam = "CLASSIC"
-				if LocMessages:GetWoWBuild() ~= "CLASSIC" then
+				if D4:GetWoWBuild() ~= "CLASSIC" then
 					gam = "RETAIL"
 				end
 
