@@ -126,16 +126,24 @@ f_loc:SetScript(
 		end
 
 		if eventIndex == nil then return end
-		if C_LossOfControl.GetEventInfo ~= nil then
-			loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
-		elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
-			local tab = C_LossOfControl.GetActiveLossOfControlData(eventIndex)
-			loctype = tab["locType"]
-			text = tab["displayText"]
-			duration = tab["duration"]
-			spellID = tab["spellID"]
+		if C_LossOfControl then
+			if C_LossOfControl.GetEventInfo ~= nil then
+				loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
+			elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
+				local tab = C_LossOfControl.GetActiveLossOfControlData(eventIndex)
+				if tab ~= nil then
+					loctype = tab["locType"]
+					text = tab["displayText"]
+					duration = tab["duration"]
+					spellID = tab["spellID"]
+				else
+					print("[LOC] C_LossOfControl.GetActiveLossOfControlData is broken?")
+				end
+			else
+				print("[LOC] FAILED - API BROKEN? NO FUNCTION FOUND")
+			end
 		else
-			print("[LOC] FAILED - API not found")
+			print("[LOC] C_LossOfControl is not valid.")
 		end
 
 		dispelType = LOCGetSchoolType(spellID)
