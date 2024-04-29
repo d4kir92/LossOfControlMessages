@@ -129,7 +129,8 @@ f_loc:SetScript(
 		if C_LossOfControl then
 			if C_LossOfControl.GetEventInfo ~= nil then
 				loctype, spellID, text, _, _, _, duration, _, _, _ = C_LossOfControl.GetEventInfo(eventIndex) --C_LossOfControl.GetEventInfo(id)
-			elseif C_LossOfControl.GetActiveLossOfControlData ~= nil then
+			elseif C_LossOfControl.GetActiveLossOfControlData ~= nil or nil then
+				if unitToken ~= "player" then return end
 				local tab = C_LossOfControl.GetActiveLossOfControlData(eventIndex)
 				if tab ~= nil then
 					loctype = tab["locType"]
@@ -137,7 +138,7 @@ f_loc:SetScript(
 					duration = tab["duration"]
 					spellID = tab["spellID"]
 				else
-					print("[LOC] C_LossOfControl.GetActiveLossOfControlData is broken?")
+					print("[LOC] C_LossOfControl.GetActiveLossOfControlData is broken?", tab)
 				end
 			else
 				print("[LOC] FAILED - API BROKEN? NO FUNCTION FOUND")
@@ -217,7 +218,12 @@ f_loc:SetScript(
 	end
 )
 
-f_loc:RegisterEvent("LOSS_OF_CONTROL_ADDED")
+if f_loc.RegisterUnitEvent then
+	f_loc:RegisterUnitEvent("LOSS_OF_CONTROL_ADDED", "player")
+else
+	f_loc:RegisterEvent("LOSS_OF_CONTROL_ADDED")
+end
+
 -- CMDS --
 local cmds = {}
 cmds["!loc"] = function()
