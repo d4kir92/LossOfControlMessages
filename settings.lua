@@ -3,7 +3,7 @@ local AddonName, LocMessages = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 function LocMessages:InitSetting()
 	local LOCTAB_Settings = {}
-	D4:SetVersion(AddonName, 135860, "1.2.33")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.34")
 	LOCTAB_Settings.panel = CreateFrame("Frame", "LOCTAB_Settings", UIParent)
 	LOCTAB_Settings.panel.name = "LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t"
 	local BR = 16
@@ -30,7 +30,7 @@ function LocMessages:InitSetting()
 	settings_printnothing.dbvalue = "printnothing"
 	LocMessages:CreateCheckBox(settings_printnothing)
 	Y = Y - BR
-	if UnitGroupRolesAssigned and D4:GetWoWBuildNr() > 19999 then
+	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
 		local settings_onlyasheal = {}
 		settings_onlyasheal.name = "onlyasheal"
 		settings_onlyasheal.parent = LOCTAB_Settings.panel
