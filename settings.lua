@@ -3,7 +3,7 @@ local AddonName, LocMessages = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 function LocMessages:InitSetting()
 	local LOCTAB_Settings = {}
-	LocMessages:SetVersion(AddonName, 135860, "1.2.34")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.35")
 	LOCTAB_Settings.panel = CreateFrame("Frame", "LOCTAB_Settings", UIParent)
 	LOCTAB_Settings.panel.name = "LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t"
 	local BR = 16
