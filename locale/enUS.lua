@@ -1,16 +1,21 @@
 -- enUS English
-local L = LibStub("AceLocale-3.0"):NewLocale("D4KIRLOCMessagesHelper", "enUS", true)
-L["showdispelltype"] = "Show Dispell Type"
-L["showlocchat"] = "Loss of control Chat"
-L["showlocemote"] = "Loss of control Emote"
-L["loctext"] = "%s (For %i seconds)"
-L["prefix"] = "Prefix"
-L["suffix"] = "Suffix"
-L["printnothing"] = "Print Nothing"
-L["showinarenas"] = "Show in Arenas"
-L["showinraids"] = "Show in Raids"
-L["showinbgs"] = "Show in Battlegrounds"
-L["channelchat"] = "Channel"
-L["onlyasheal"] = "Only Show when role is Healer"
-L["showoutsideofinstance"] = "Show Outside of Instances/Dungeons"
-L["showinenglishonly"] = "Show in English only"
+local _, LocMessages = ...
+LocMessages:AddTrans("enUS", "showdispelltype", "Show Dispell Type")
+LocMessages:AddTrans("enUS", "showlocchat", "Loss of control Chat")
+LocMessages:AddTrans("enUS", "showlocemote", "Loss of control Emote")
+LocMessages:AddTrans("enUS", "loctext", "%s (For %i seconds)")
+LocMessages:AddTrans("enUS", "prefix", "Prefix")
+LocMessages:AddTrans("enUS", "suffix", "Suffix")
+LocMessages:AddTrans("enUS", "printnothing", "Print Nothing")
+LocMessages:AddTrans("enUS", "showinarenas", "Show in Arenas")
+LocMessages:AddTrans("enUS", "showinraids", "Show in Raids")
+LocMessages:AddTrans("enUS", "showinbgs", "Show in Battlegrounds")
+LocMessages:AddTrans("enUS", "channelchat", "Channel")
+LocMessages:AddTrans("enUS", "onlyasheal", "Only Show when role is Healer")
+LocMessages:AddTrans("enUS", "showoutsideofinstance", "Show Outside of Instances/Dungeons")
+LocMessages:AddTrans("enUS", "showinenglishonly", "Show in English only")
+LocMessages:AddTrans("enUS", "MMBTN", "Show Minimap Button")
+LocMessages:AddTrans("deDE", "GENERAL", "General")
+LocMessages:AddTrans("enUS", "OUTPUT", "Output")
+LocMessages:AddTrans("enUS", "LOCATION", "Location")
+LocMessages:AddTrans("enUS", "LOCTYPES", "LOC Types")

@@ -1,10 +1,8 @@
 -- Config
 local _, LocMessages = ...
-
 function LocMessages:GetConfig(str, val)
 	LOCTABPC = LOCTABPC or {}
 	local setting = val
-
 	if LOCTABPC ~= nil then
 		if LOCTABPC[str] == nil then
 			LOCTABPC[str] = val

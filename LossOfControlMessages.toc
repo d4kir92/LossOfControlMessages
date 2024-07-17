@@ -4,7 +4,7 @@
 ## Interface-Cata: 40400
 ## Interface: 100207, 110000
 
-## Version: 1.2.35
+## Version: 1.2.36
 ## Title: LossOfControlMessages by |cff3FC7EBD4KiR |T132115:16:16:0:0|t 
 ## Notes: Send to chat LOC messages
 ## Author: D4KiR
@@ -19,7 +19,6 @@
 libs\D4Lib\D4Lib.xml
 libs\LibStub\LibStub.lua
 libs\LibDropDown\embed.xml
-libs\AceLocale-3.0\AceLocale-3.0.xml
 
 locale\enUS.lua
 locale\deDE.lua

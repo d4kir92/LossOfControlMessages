@@ -1,17 +1,16 @@
 -- koKR Korean
-local L = LibStub("AceLocale-3.0"):NewLocale("D4KIRLOCMessagesHelper", "koKR")
-if not L then return end
-L["showdispelltype"] = "Show Dispell Type"
-L["showlocchat"] = "제어력 상실 채팅 메시지"
-L["showlocemote"] = "제어력 상실 감정표현"
-L["loctext"] = "%s (%i 초 동안)"
-L["prefix"] = "접두사"
-L["suffix"] = "접미사"
-L["printnothing"] = "아무것도 출력하지 않음"
-L["showinarenas"] = "Show in Arenas"
-L["showinraids"] = "공격대에서 표시"
-L["showinbgs"] = "전장에서 표시"
-L["channelchat"] = "Channel"
-L["onlyasheal"] = "Only Show when role is Healer"
-L["showoutsideofinstance"] = "Show Outside of Instances/Dungeons"
-L["showinenglishonly"] = "Show in English only"
+local _, LocMessages = ...
+LocMessages:AddTrans("koKR", "showdispelltype", "Show Dispell Type")
+LocMessages:AddTrans("koKR", "showlocchat", "제어력 상실 채팅 메시지")
+LocMessages:AddTrans("koKR", "showlocemote", "제어력 상실 감정표현")
+LocMessages:AddTrans("koKR", "loctext", "%s (%i 초 동안)")
+LocMessages:AddTrans("koKR", "prefix", "접두사")
+LocMessages:AddTrans("koKR", "suffix", "접미사")
+LocMessages:AddTrans("koKR", "printnothing", "아무것도 출력하지 않음")
+LocMessages:AddTrans("koKR", "showinarenas", "Show in Arenas")
+LocMessages:AddTrans("koKR", "showinraids", "공격대에서 표시")
+LocMessages:AddTrans("koKR", "showinbgs", "전장에서 표시")
+LocMessages:AddTrans("koKR", "channelchat", "Channel")
+LocMessages:AddTrans("koKR", "onlyasheal", "Only Show when role is Healer")
+LocMessages:AddTrans("koKR", "showoutsideofinstance", "Show Outside of Instances/Dungeons")
+LocMessages:AddTrans("koKR", "showinenglishonly", "Show in English only")

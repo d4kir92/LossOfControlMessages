@@ -1,17 +1,16 @@
 -- ruRU Russian
-local L = LibStub("AceLocale-3.0"):NewLocale("D4KIRLOCMessagesHelper", "ruRU")
-if not L then return end
-L["showdispelltype"] = "Show Dispell Type"
-L["showlocchat"] = "Сообщение в чате, когда потерян контроль"
-L["showlocemote"] = "Потеря контроля/эмоция"
-L["loctext"] = "%s (на %i секунд)"
-L["prefix"] = "Префикс"
-L["suffix"] = "Суффикс"
-L["printnothing"] = "Ничего не печатать"
-L["showinarenas"] = "Show in Arenas"
-L["showinraids"] = "Показать в рейде"
-L["showinbgs"] = "Показывать на поле битвы"
-L["channelchat"] = "Channel"
-L["onlyasheal"] = "Only Show when role is Healer"
-L["showoutsideofinstance"] = "Show Outside of Instances/Dungeons"
-L["showinenglishonly"] = "Show in English only"
+local _, LocMessages = ...
+LocMessages:AddTrans("ruRU", "showdispelltype", "Show Dispell Type")
+LocMessages:AddTrans("ruRU", "showlocchat", "Сообщение в чате, когда потерян контроль")
+LocMessages:AddTrans("ruRU", "showlocemote", "Потеря контроля/эмоция")
+LocMessages:AddTrans("ruRU", "loctext", "%s (на %i секунд)")
+LocMessages:AddTrans("ruRU", "prefix", "Префикс")
+LocMessages:AddTrans("ruRU", "suffix", "Суффикс")
+LocMessages:AddTrans("ruRU", "printnothing", "Ничего не печатать")
+LocMessages:AddTrans("ruRU", "showinarenas", "Show in Arenas")
+LocMessages:AddTrans("ruRU", "showinraids", "Показать в рейде")
+LocMessages:AddTrans("ruRU", "showinbgs", "Показывать на поле битвы")
+LocMessages:AddTrans("ruRU", "channelchat", "Channel")
+LocMessages:AddTrans("ruRU", "onlyasheal", "Only Show when role is Healer")
+LocMessages:AddTrans("ruRU", "showoutsideofinstance", "Show Outside of Instances/Dungeons")
+LocMessages:AddTrans("ruRU", "showinenglishonly", "Show in English only")

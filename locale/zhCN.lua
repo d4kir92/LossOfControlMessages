@@ -1,17 +1,16 @@
 -- zhCN Simplified Chinese
-local L = LibStub("AceLocale-3.0"):NewLocale("D4KIRLOCMessagesHelper", "zhCN")
-if not L then return end
-L["showdispelltype"] = "Show Dispell Type"
-L["showlocchat"] = "被控制 聊天消息"
-L["showlocemote"] = "被控制 表情"
-L["loctext"] = "%s (%i 秒)"
-L["prefix"] = "前缀"
-L["suffix"] = "后缀"
-L["printnothing"] = "不显示任何东西"
-L["showinarenas"] = "Show in Arenas"
-L["showinraids"] = "在团队时显示"
-L["showinbgs"] = "在战场时显示"
-L["channelchat"] = "Channel"
-L["onlyasheal"] = "Only Show when role is Healer"
-L["showoutsideofinstance"] = "Show Outside of Instances/Dungeons"
-L["showinenglishonly"] = "Show in English only"
+local _, LocMessages = ...
+LocMessages:AddTrans("zhCN", "showdispelltype", "Show Dispell Type")
+LocMessages:AddTrans("zhCN", "showlocchat", "被控制 聊天消息")
+LocMessages:AddTrans("zhCN", "showlocemote", "被控制 表情")
+LocMessages:AddTrans("zhCN", "loctext", "%s (%i 秒)")
+LocMessages:AddTrans("zhCN", "prefix", "前缀")
+LocMessages:AddTrans("zhCN", "suffix", "后缀")
+LocMessages:AddTrans("zhCN", "printnothing", "不显示任何东西")
+LocMessages:AddTrans("zhCN", "showinarenas", "Show in Arenas")
+LocMessages:AddTrans("zhCN", "showinraids", "在团队时显示")
+LocMessages:AddTrans("zhCN", "showinbgs", "在战场时显示")
+LocMessages:AddTrans("zhCN", "channelchat", "Channel")
+LocMessages:AddTrans("zhCN", "onlyasheal", "Only Show when role is Healer")
+LocMessages:AddTrans("zhCN", "showoutsideofinstance", "Show Outside of Instances/Dungeons")
+LocMessages:AddTrans("zhCN", "showinenglishonly", "Show in English only")

@@ -1,6 +1,5 @@
 -- By D4KiR
 local _, LocMessages = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("D4KIRLOCMessagesHelper")
 function LocMessages:AllowedTo()
 	local _channel = LocMessages:GetConfig("channelchat", "AUTO")
 	if (GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0) and LocMessages:GetConfig("printnothing", false) == false then return true end

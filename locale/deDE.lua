@@ -1,17 +1,21 @@
 -- deDE German Deutsch
-local L = LibStub("AceLocale-3.0"):NewLocale("D4KIRLOCMessagesHelper", "deDE")
-if not L then return end
-L["showdispelltype"] = "Typ für Entbannung anzeigen"
-L["showlocchat"] = "Kontrollverlust Chat-Nachricht"
-L["showlocemote"] = "Kontrollverlust Emote"
-L["loctext"] = "%s (Für %i Sekunden)"
-L["prefix"] = "Präfix"
-L["suffix"] = "Suffix"
-L["printnothing"] = "Nichts Schreiben"
-L["showinarenas"] = "In Arenas anzeigen"
-L["showinraids"] = "In Schlachtzügen anzeigen"
-L["showinbgs"] = "In Schlachtfeldern anzeigen"
-L["channelchat"] = "Channel"
-L["onlyasheal"] = "Nur anzeigen, wenn die Rolle Heiler ist"
-L["showoutsideofinstance"] = "Außerhalb von Dungeons anzeigen"
-L["showinenglishonly"] = "Nur auf Englisch anzeigen"
+local _, LocMessages = ...
+LocMessages:AddTrans("deDE", "showdispelltype", "Typ für Entbannung anzeigen")
+LocMessages:AddTrans("deDE", "showlocchat", "Kontrollverlust Chat-Nachricht")
+LocMessages:AddTrans("deDE", "showlocemote", "Kontrollverlust Emote")
+LocMessages:AddTrans("deDE", "loctext", "%s (Für %i Sekunden)")
+LocMessages:AddTrans("deDE", "prefix", "Präfix")
+LocMessages:AddTrans("deDE", "suffix", "Suffix")
+LocMessages:AddTrans("deDE", "printnothing", "Nichts Schreiben")
+LocMessages:AddTrans("deDE", "showinarenas", "In Arenas anzeigen")
+LocMessages:AddTrans("deDE", "showinraids", "In Schlachtzügen anzeigen")
+LocMessages:AddTrans("deDE", "showinbgs", "In Schlachtfeldern anzeigen")
+LocMessages:AddTrans("deDE", "channelchat", "Channel")
+LocMessages:AddTrans("deDE", "onlyasheal", "Nur anzeigen, wenn die Rolle Heiler ist")
+LocMessages:AddTrans("deDE", "showoutsideofinstance", "Außerhalb von Dungeons anzeigen")
+LocMessages:AddTrans("deDE", "showinenglishonly", "Nur auf Englisch anzeigen")
+LocMessages:AddTrans("deDE", "MMBTN", "Minimapknopf anzeigen")
+LocMessages:AddTrans("deDE", "GENERAL", "Allgemein")
+LocMessages:AddTrans("deDE", "OUTPUT", "Ausgabe")
+LocMessages:AddTrans("enUS", "LOCATION", "Ort")
+LocMessages:AddTrans("enUS", "LOCTYPES", "LOC Typen")
