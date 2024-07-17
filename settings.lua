@@ -14,14 +14,14 @@ end
 local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
-	LocMessages:SetVersion(AddonName, 135860, "1.2.36")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.37")
 	loc_settings = LocMessages:CreateFrame(
 		{
 			["name"] = "LOC Messages",
 			["pTab"] = {"CENTER"},
 			["sw"] = 520,
 			["sh"] = 520,
-			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.36")
+			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.37")
 		}
 	)
 
@@ -156,8 +156,9 @@ function LocMessages:InitSetting()
 		}
 	)
 
-	LocMessages:AddSlash("hla", LocMessages.ToggleSettings)
-	LocMessages:AddSlash("highlevelalert", LocMessages.ToggleSettings)
+	LocMessages:AddSlash("loc", LocMessages.ToggleSettings)
+	LocMessages:AddSlash("locmsg", LocMessages.ToggleSettings)
+	LocMessages:AddSlash("locmessages", LocMessages.ToggleSettings)
 	if LocMessages:GV(LOCTABPC, "MMBTN", true) then
 		LocMessages:ShowMMBtn("LocMessages")
 	else
