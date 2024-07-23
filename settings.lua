@@ -14,14 +14,14 @@ end
 local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
-	LocMessages:SetVersion(AddonName, 135860, "1.2.38")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.39")
 	loc_settings = LocMessages:CreateFrame(
 		{
 			["name"] = "LOC Messages",
 			["pTab"] = {"CENTER"},
 			["sw"] = 520,
 			["sh"] = 520,
-			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.38")
+			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.39")
 		}
 	)
 
