@@ -86,7 +86,7 @@ end
 
 local function LOCGetSchoolType(sid)
 	for i = 1, 6 do
-		local _, _, _, dispelType, _, _, _, _, _, spellId = UnitAura("player", i, "HARMFUL")
+		local _, _, _, dispelType, _, _, _, _, _, spellId = LocMessages:UnitAura("player", i, "HARMFUL")
 		if spellId and spellId == sid then return dispelType end
 	end
 
