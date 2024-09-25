@@ -1,7 +1,6 @@
 -- LIB Design
 local _, LocMessages = ...
 local CBS = {}
-
 function LocMessages:CreateText(tab)
 	tab.textsize = tab.textsize or 12
 	local text = tab.frame:CreateFontString(nil, "ARTWORK")
@@ -37,13 +36,15 @@ function LocMessages:CreateTextBox(tab)
 	tab.value = string.gsub(tab.value, "\n", "")
 	f.Text:SetText(tab.value or "")
 	f.Text:SetCursorPosition(0)
-
-	f.Text:SetScript("OnTextChanged", function(sel)
-		local text = sel:GetText()
-		sel:SetText(text)
-		LOCTABPC[tab.dbvalue] = text
-		LocMessages:SetupLOC()
-	end)
+	f.Text:SetScript(
+		"OnTextChanged",
+		function(sel)
+			local text = sel:GetText()
+			sel:SetText(text)
+			LOCTABPC[tab.dbvalue] = text
+			LocMessages:SetupLOC()
+		end
+	)
 
 	return f
 end
@@ -58,13 +59,15 @@ function LocMessages:CreateCheckBox(tab)
 	CB:SetPoint("TOPLEFT", tab.x, tab.y)
 	CB.tooltip = tab.tooltip
 	CB:SetChecked(tab.checked)
-
-	CB:SetScript("OnClick", function(sel)
-		local status = CB:GetChecked()
-		sel:SetChecked(status)
-		LOCTABPC[tab.dbvalue] = status
-		LocMessages:SetupLOC()
-	end)
+	CB:SetScript(
+		"OnClick",
+		function(sel)
+			local status = CB:GetChecked()
+			sel:SetChecked(status)
+			LOCTABPC[tab.dbvalue] = status
+			LocMessages:SetupLOC()
+		end
+	)
 
 	local entry = {}
 	entry.ele = CB
@@ -85,7 +88,6 @@ function LocMessages:CreateComboBox(tab)
 	tab.x = tab.x or 0
 	tab.y = tab.y or 0
 	local t = {}
-
 	for i, v in pairs(tab.tab) do
 		if v.Code then
 			tinsert(t, v.Code)
@@ -120,36 +122,61 @@ function LocMessages:CreateSlider(tab)
 	tab.x = tab.x or 0
 	tab.y = tab.y or 0
 	tab.value = tab.value or 0
-	local SL = CreateFrame("Slider", tab.name, tab.parent, "OptionsSliderTemplate")
+	local SL = CreateFrame("Slider", tab.name, tab.parent, "UISliderTemplate")
 	SL:SetPoint("TOPLEFT", tab.x, tab.y)
+	if SL.Low == nil then
+		SL.Low = SL:CreateFontString(nil, nil, "GameFontNormal")
+		SL.Low:SetPoint("BOTTOMLEFT", SL, "BOTTOMLEFT", 0, -12)
+		SL.Low:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+		SL.Low:SetTextColor(1, 1, 1)
+	end
+
+	if SL.High == nil then
+		SL.High = SL:CreateFontString(nil, nil, "GameFontNormal")
+		SL.High:SetPoint("BOTTOMRIGHT", SL, "BOTTOMRIGHT", 0, -12)
+		SL.High:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
+		SL.High:SetTextColor(1, 1, 1)
+	end
+
+	if SL.Text == nil then
+		SL.Text = SL:CreateFontString(nil, nil, "GameFontNormal")
+		SL.Text:SetPoint("TOP", SL, "TOP", 0, 16)
+		SL.Text:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
+		SL.Text:SetTextColor(1, 1, 1)
+	end
+
 	SL.Low:SetText(tab.min)
 	SL.High:SetText(tab.max)
 	SL:SetMinMaxValues(tab.min, tab.max)
 	SL:SetValue(tab.value)
-	SL:SetWidth(500)
+	SL:SetSize(500, 16)
 	SL:SetObeyStepOnDrag(1)
 	tab.steps = tab.steps or 1
 	SL:SetValueStep(tab.steps)
 	SL.decimals = tab.decimals or 0
-
-	SL:SetScript("OnValueChanged", function(sel, val)
-		val = LocMessages:MathR(val, sel.decimals)
-		val = val - val % tab.steps
-		LOCTABPC[tab.dbvalue] = val
-		local trans = {}
-		trans["VALUE"] = val
-		SL.Text:SetText(tab.text)
-
-		if tab.func ~= nil then
-			tab:func()
+	SL:SetScript(
+		"OnValueChanged",
+		function(sel, val)
+			val = LocMessages:MathR(val, sel.decimals)
+			val = val - val % tab.steps
+			LOCTABPC[tab.dbvalue] = val
+			local trans = {}
+			trans["VALUE"] = val
+			SL.Text:SetText(tab.text)
+			if tab.func ~= nil then
+				tab:func()
+			end
 		end
-	end)
+	)
 
-	hooksecurefunc("UpdateLanguage", function()
-		local trans = {}
-		trans["VALUE"] = SL:GetValue()
-		SL.Text:SetText(tab.text)
-	end)
+	hooksecurefunc(
+		"UpdateLanguage",
+		function()
+			local trans = {}
+			trans["VALUE"] = SL:GetValue()
+			SL.Text:SetText(tab.text)
+		end
+	)
 
 	return EB
 end
@@ -158,7 +185,6 @@ function LocMessages:CTexture(frame, tab)
 	tab.layer = tab.layer or "BACKGROUND"
 	local texture = frame:CreateTexture(nil, tab.layer)
 	tab.texture = tab.texture or ""
-
 	if tab.texture ~= "" then
 		tab.color.r = tab.color.r or 1
 		tab.color.g = tab.color.g or 0
@@ -212,7 +238,6 @@ function LocMessages:CreateF(tab)
 	frame.text:SetFont(STANDARD_TEXT_FONT, tab.textsize, "OUTLINE")
 	frame.text:SetPoint(tab.textalign, 0, 0)
 	frame.text:SetText(tab.text)
-
 	function frame:SetText(text)
 		frame.text:SetText(text)
 	end
