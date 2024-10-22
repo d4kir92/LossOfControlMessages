@@ -1,5 +1,5 @@
 ## Interface: 20504
-## Version: 1.2.48
+## Version: 1.2.49
 ## Title: LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t 
 ## Notes: Send to chat LOC messages
 ## Author: D4KiR
