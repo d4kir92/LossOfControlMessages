@@ -15,14 +15,14 @@ local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
 	LOCTABPC = LOCTABPC or {}
-	LocMessages:SetVersion(AddonName, 135860, "1.2.50")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.51")
 	loc_settings = LocMessages:CreateFrame(
 		{
 			["name"] = "LOC Messages",
 			["pTab"] = {"CENTER"},
 			["sw"] = 520,
 			["sh"] = 520,
-			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.50")
+			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.51")
 		}
 	)
 
@@ -145,7 +145,7 @@ function LocMessages:InitSetting()
 			["name"] = "LocMessages",
 			["icon"] = 135860,
 			["dbtab"] = LOCTABPC,
-			["vTT"] = {{"LocMessages |T135860:16:16:0:0|t", "v|cff3FC7EB1.2.50"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Hide Minimap Icon"}},
+			["vTT"] = {{"LocMessages |T135860:16:16:0:0|t", "v|cff3FC7EB1.2.51"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Hide Minimap Icon"}},
 			["funcL"] = function()
 				LocMessages:ToggleSettings()
 			end,
