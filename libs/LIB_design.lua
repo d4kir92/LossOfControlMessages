@@ -42,7 +42,6 @@ function LocMessages:CreateTextBox(tab)
 			local text = sel:GetText()
 			sel:SetText(text)
 			LOCTABPC[tab.dbvalue] = text
-			LocMessages:SetupLOC()
 		end
 	)
 
@@ -65,7 +64,6 @@ function LocMessages:CreateCheckBox(tab)
 			local status = CB:GetChecked()
 			sel:SetChecked(status)
 			LOCTABPC[tab.dbvalue] = status
-			LocMessages:SetupLOC()
 		end
 	)
 

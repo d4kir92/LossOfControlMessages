@@ -15,14 +15,14 @@ local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
 	LOCTABPC = LOCTABPC or {}
-	LocMessages:SetVersion(AddonName, 135860, "1.2.55")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.56")
 	loc_settings = LocMessages:CreateFrame(
 		{
 			["name"] = "LOC Messages",
 			["pTab"] = {"CENTER"},
 			["sw"] = 520,
 			["sh"] = 520,
-			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.55")
+			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.56")
 		}
 	)
 
@@ -140,31 +140,9 @@ function LocMessages:InitSetting()
 		LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
 	end
 
-	LocMessages:CreateMinimapButton(
-		{
-			["name"] = "LocMessages",
-			["icon"] = 135860,
-			["dbtab"] = LOCTABPC,
-			["vTT"] = {{"LocMessages |T135860:16:16:0:0|t", "v|cff3FC7EB1.2.55"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Hide Minimap Icon"}},
-			["funcL"] = function()
-				LocMessages:ToggleSettings()
-			end,
-			["funcR"] = function()
-				LocMessages:SV(LOCTABPC, "MMBTN", false)
-				LocMessages:MSG("Minimap Button is now hidden.")
-				LocMessages:HideMMBtn("LocMessages")
-			end,
-		}
-	)
-
 	LocMessages:AddSlash("loc", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locmsg", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locmessages", LocMessages.ToggleSettings)
-	if LocMessages:GV(LOCTABPC, "MMBTN", true) then
-		LocMessages:ShowMMBtn("LocMessages")
-	else
-		LocMessages:HideMMBtn("LocMessages")
-	end
 end
 
 local LOCloaded = false
@@ -177,22 +155,31 @@ function LocMessages:SetSetup(val)
 	LOCSETUP = val
 end
 
-local vars = false
-local addo = false
 local frame = CreateFrame("FRAME")
 frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("VARIABLES_LOADED")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-function frame:OnEvent(event)
-	if event == "VARIABLES_LOADED" then
-		vars = true
-	end
-
-	if event == "ADDON_LOADED" then
-		addo = true
-	end
-
-	if vars and addo and not LOCloaded then
+frame:RegisterEvent("PLAYER_LOGIN")
+function frame:OnEvent(event, addonName, ...)
+	if event == "ADDON_LOADED" and addonName == AddonName then
+		frame:UnregisterEvent("ADDON_LOADED")
+		LocMessages:CreateMinimapButton(
+			{
+				["name"] = "LocMessages",
+				["icon"] = 135860,
+				["dbtab"] = LOCTABPC,
+				["vTT"] = {{"LocMessages |T135860:16:16:0:0|t", "v|cff3FC7EB1.2.56"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Hide Minimap Icon"}},
+				["funcL"] = function()
+					LocMessages:ToggleSettings()
+				end,
+				["funcR"] = function()
+					LocMessages:SV(LOCTABPC, "MMBTN", false)
+					LocMessages:MSG("Minimap Button is now hidden.")
+					LocMessages:HideMMBtn("LocMessages")
+				end,
+				["dbkey"] = "MMBTN"
+			}
+		)
+	elseif event == "PLAYER_LOGIN" and not LOCloaded then
+		frame:UnregisterEvent("PLAYER_LOGIN")
 		LOCloaded = true
 		C_Timer.After(
 			0,
