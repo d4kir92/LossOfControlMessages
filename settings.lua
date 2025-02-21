@@ -15,14 +15,14 @@ local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
 	LOCTABPC = LOCTABPC or {}
-	LocMessages:SetVersion(AddonName, 135860, "1.2.57")
+	LocMessages:SetVersion(AddonName, 135860, "1.2.58")
 	loc_settings = LocMessages:CreateFrame(
 		{
 			["name"] = "LOC Messages",
 			["pTab"] = {"CENTER"},
 			["sw"] = 520,
 			["sh"] = 520,
-			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.57")
+			["title"] = format("LOC Messages |T135860:16:16:0:0|t v|cff3FC7EB%s", "1.2.58")
 		}
 	)
 
@@ -113,6 +113,16 @@ function LocMessages:InitSetting()
 	end
 
 	LocMessages:AppendCategory("prefix")
+	local pre = {}
+	pre.name = "prefix"
+	pre.parent = loc_settings.SC
+	pre.value = LocMessages:GetConfig("prefix", "")
+	pre.text = LocMessages:Trans("prefix")
+	pre.x = 10
+	pre.y = LocMessages:GetAppendY()
+	pre.dbvalue = "prefix"
+	LocMessages:CreateTextBox(pre)
+	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
 	for i, v in pairs(LOCTypes) do
 		local prefix = {}
 		prefix.name = "prefix"
@@ -127,6 +137,16 @@ function LocMessages:InitSetting()
 	end
 
 	LocMessages:AppendCategory("suffix")
+	local suf = {}
+	suf.name = "suffix"
+	suf.parent = loc_settings.SC
+	suf.value = LocMessages:GetConfig("suffix", "")
+	suf.text = LocMessages:Trans("suffix")
+	suf.x = 10
+	suf.y = LocMessages:GetAppendY()
+	suf.dbvalue = "suffix"
+	LocMessages:CreateTextBox(suf)
+	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
 	for i, v in pairs(LOCTypes) do
 		local suffix = {}
 		suffix.name = "suffix"
@@ -166,7 +186,7 @@ function frame:OnEvent(event, addonName, ...)
 				["name"] = "LocMessages",
 				["icon"] = 135860,
 				["dbtab"] = LOCTABPC,
-				["vTT"] = {{"LocMessages |T135860:16:16:0:0|t", "v|cff3FC7EB1.2.57"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Hide Minimap Icon"}},
+				["vTT"] = {{"LocMessages |T135860:16:16:0:0|t", "v|cff3FC7EB1.2.58"}, {"Leftclick", "Toggle Settings"}, {"Rightclick", "Hide Minimap Icon"}},
 				["funcL"] = function()
 					LocMessages:ToggleSettings()
 				end,
