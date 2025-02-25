@@ -1,13 +1,15 @@
 ## Interface: 11506
-## Version: 1.2.58
+## Version: 1.2.59
 ## Title: LossOfControlMessages |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t 
 ## Notes: Send to chat LOC messages
 ## Author: D4KiR
+## X-Category: D4KiR
 ## DefaultState: enabled
 ## SavedVariables: LOCTAB
 ## SavedVariablesPerCharacter: LOCTABPC
 ## X-Curse-Project-ID: 391012
 ## X-Wago-ID: anKW5rNE
+## IconTexture: 135860
 
 # External Libs
 libs\D4Lib\D4Lib.xml

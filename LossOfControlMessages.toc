@@ -4,10 +4,11 @@
 ## Interface-Cata: 40401, 40402
 ## Interface: 110007, 110100
 
-## Version: 1.2.58
+## Version: 1.2.59
 ## Title: LossOfControlMessages by |cff3FC7EBD4KiR |T132115:16:16:0:0|t 
 ## Notes: Send to chat LOC messages
 ## Author: D4KiR
+## X-Category: D4KiR
 ## DefaultState: enabled
 ## SavedVariables: LOCTAB
 ## SavedVariablesPerCharacter: LOCTABPC
