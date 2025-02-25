@@ -20,7 +20,7 @@ function LocMessages:InitSetting()
 			["pTab"] = {"CENTER"},
 			["sw"] = 520,
 			["sh"] = 520,
-			["title"] = format("|T135860:16:16:0:0|t LOC Messages v|cff3FC7EB%s", LocMessages:GetVersion())
+			["title"] = format("|T135860:16:16:0:0|t L|cff3FC7EBoss|rO|cff3FC7EBf|rC|cff3FC7EBontrol|rM|cff3FC7EBessages|r v|cff3FC7EB%s", LocMessages:GetVersion())
 		}
 	)
 
@@ -180,13 +180,13 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.59")
+		LocMessages:SetVersion(135860, "1.2.60")
 		LocMessages:CreateMinimapButton(
 			{
 				["name"] = "LocMessages",
 				["icon"] = 135860,
 				["dbtab"] = LOCTABPC,
-				["vTT"] = {{"|T135860:16:16:0:0|t LocMessages", "v|cff3FC7EB" .. LocMessages:GetVersion()}, {LocMessages:Trans("LID_LEFTCLICK"), LocMessages:Trans("LID_OPENSETTINGS")}, {LocMessages:Trans("LID_RIGHTCLICK"), LocMessages:Trans("LID_HIDEMINIMAPBUTTON")}},
+				["vTT"] = {{"|T135860:16:16:0:0|t L|cff3FC7EBoss|rO|cff3FC7EBf|rC|cff3FC7EBontrol|rM|cff3FC7EBessages|r", "v|cff3FC7EB" .. LocMessages:GetVersion()}, {LocMessages:Trans("LID_LEFTCLICK"), LocMessages:Trans("LID_OPENSETTINGS")}, {LocMessages:Trans("LID_RIGHTCLICK"), LocMessages:Trans("LID_HIDEMINIMAPBUTTON")}},
 				["funcL"] = function()
 					LocMessages:ToggleSettings()
 				end,
