@@ -4,11 +4,12 @@
 ## Interface-Cata: 40401, 40402
 ## Interface: 110007, 110100
 
-## Version: 1.2.60
+## Version: 1.2.61
 ## Title: L|cff3FC7EBoss|rO|cff3FC7EBf|rC|cff3FC7EBontrol|rM|cff3FC7EBessages|r |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: Send to chat LOC messages
-## Author: D4KiR
-## X-Category: D4KiR
+## Author: D|cff3FC7EB4KiR |T132115:16:16:0:0|t
+## Category: D|cff3FC7EB4KiR |T132115:16:16:0:0|t
+## X-Category: D|cff3FC7EB4KiR |T132115:16:16:0:0|t
 ## DefaultState: enabled
 ## SavedVariables: LOCTAB
 ## SavedVariablesPerCharacter: LOCTABPC
