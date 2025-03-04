@@ -180,7 +180,7 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.61")
+		LocMessages:SetVersion(135860, "1.2.62")
 		LocMessages:CreateMinimapButton(
 			{
 				["name"] = "LocMessages",
