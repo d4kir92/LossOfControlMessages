@@ -58,46 +58,25 @@ function LocMessages:InitSetting()
 	LocMessages:AppendCheckbox("showlocemote", true)
 	LocMessages:AppendCheckbox("showinenglishonly", false)
 	LocMessages:AppendCheckbox("showdispelltype", true)
-	local settings_channel = {}
-	settings_channel.name = "channelchat"
-	settings_channel.parent = loc_settings.SC
-	settings_channel.text = "channelchat"
-	settings_channel.value = LocMessages:GetConfig("channelchat", "AUTO")
-	settings_channel.x = 0
-	settings_channel.y = LocMessages:GetAppendY()
-	settings_channel.dbvalue = "channelchat"
-	settings_channel.tab = {
+	LocMessages:AppendDropdown(
+		"channelchat",
+		"AUTO",
 		{
-			Name = "Auto",
-			Code = "AUTO"
+			["AUTO"] = "tAUTO",
+			["PARTY"] = "tPARTY",
+			["RAID"] = "tRAID",
+			["RAID_WARNING"] = "tRAID_WARNING",
+			["INSTANCE_CHAT"] = "tINSTANCE_CHAT",
+			["YELL"] = "tYELL",
+			["SAY"] = "tSAY",
 		},
-		{
-			Name = "Party",
-			Code = "PARTY"
-		},
-		{
-			Name = "Raid",
-			Code = "RAID"
-		},
-		{
-			Name = "Raid Warning",
-			Code = "RAID_WARNING"
-		},
-		{
-			Name = "Instance Chat",
-			Code = "INSTANCE_CHAT"
-		},
-		{
-			Name = "Yell (Higher range as Say) (This may can cause ERROR)",
-			Code = "YELL"
-		},
-		{
-			Name = "Say (Local-Range Message) (This may can cause ERROR)",
-			Code = "SAY"
-		}
-	}
+		function(val)
+			if LOCTABPC and val then
+				LOCTABPC["channelchat"] = val
+			end
+		end
+	)
 
-	LocMessages:CreateComboBox(settings_channel)
 	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
 	LocMessages:AppendCategory("LOCATION")
 	LocMessages:AppendCheckbox("showinarenas", true)
@@ -180,7 +159,7 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.62")
+		LocMessages:SetVersion(135860, "1.2.63")
 		LocMessages:CreateMinimapButton(
 			{
 				["name"] = "LocMessages",

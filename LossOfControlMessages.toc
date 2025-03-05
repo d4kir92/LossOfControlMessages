@@ -4,7 +4,7 @@
 ## Interface-Cata: 40401, 40402
 ## Interface: 110007, 110100
 
-## Version: 1.2.62
+## Version: 1.2.63
 ## Title: L|cff3FC7EBoss|rO|cff3FC7EBf|rC|cff3FC7EBontrol|rM|cff3FC7EBessages|r |T135860:16:16:0:0|t by |cff3FC7EBD4KiR |T132115:16:16:0:0|t
 ## Notes: Send to chat LOC messages
 ## Author: D|cff3FC7EB4KiR |T132115:16:16:0:0|t
@@ -19,8 +19,6 @@
 
 # External Libs
 libs\D4Lib\D4Lib.xml
-libs\LibStub\LibStub.lua
-libs\LibDropDown\embed.xml
 
 locale\enUS.lua
 locale\deDE.lua
@@ -34,7 +32,6 @@ locale\zhTW.lua
 libs\LIB_lang.lua
 libs\LIB_math.lua
 libs\LIB_design.lua
-libs\dropdown.lua
 
 config.lua
 

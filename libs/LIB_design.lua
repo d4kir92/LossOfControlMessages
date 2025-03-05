@@ -79,41 +79,6 @@ function LocMessages:CreateCheckBox(tab)
 	return CB
 end
 
-function LocMessages:CreateComboBox(tab)
-	tab = tab or {}
-	tab.parent = tab.parent or UIParent
-	tab.tooltip = tab.tooltip or ""
-	tab.x = tab.x or 0
-	tab.y = tab.y or 0
-	local t = {}
-	for i, v in pairs(tab.tab) do
-		if v.Code then
-			tinsert(t, v.Code)
-		else
-			tinsert(t, v)
-		end
-	end
-
-	local rows = {
-		["name"] = tab.name,
-		["parent"] = tab.parent,
-		["title"] = tab.text,
-		["items"] = t,
-		["defaultVal"] = tab.value,
-		["changeFunc"] = function(dropdown_frame, dropdown_val)
-			--dropdown_val = tonumber( dropdown_val )
-			if LOCTABPC and tab.dbvalue and dropdown_val then
-				LOCTABPC[tab.dbvalue] = dropdown_val
-			end
-		end
-	}
-
-	local DD = LocMessages:CreateDropdown(rows)
-	DD:SetPoint("TOPLEFT", tab.parent, "TOPLEFT", tab.x, tab.y)
-
-	return DD
-end
-
 function LocMessages:CreateSlider(tab)
 	tab = tab or {}
 	tab.parent = tab.parent or UIParent
