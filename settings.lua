@@ -94,7 +94,7 @@ function LocMessages:InitSetting()
 	pre.name = "prefix"
 	pre.parent = loc_settings.SC
 	pre.value = LocMessages:GetConfig("prefix", "")
-	pre.text = LocMessages:Trans("prefix")
+	pre.text = LocMessages:Trans("LID_prefix")
 	pre.x = 10
 	pre.y = LocMessages:GetAppendY()
 	pre.dbvalue = "prefix"
@@ -105,7 +105,7 @@ function LocMessages:InitSetting()
 		prefix.name = "prefix"
 		prefix.parent = loc_settings.SC
 		prefix.value = LocMessages:GetConfig("prefix_" .. v, "")
-		prefix.text = LocMessages:Trans("prefix") .. " (" .. v .. ")"
+		prefix.text = LocMessages:Trans("LID_prefix") .. " (" .. v .. ")"
 		prefix.x = 10
 		prefix.y = LocMessages:GetAppendY()
 		prefix.dbvalue = "prefix_" .. v
@@ -118,7 +118,7 @@ function LocMessages:InitSetting()
 	suf.name = "suffix"
 	suf.parent = loc_settings.SC
 	suf.value = LocMessages:GetConfig("suffix", "")
-	suf.text = LocMessages:Trans("suffix")
+	suf.text = LocMessages:Trans("LID_suffix")
 	suf.x = 10
 	suf.y = LocMessages:GetAppendY()
 	suf.dbvalue = "suffix"
@@ -129,7 +129,7 @@ function LocMessages:InitSetting()
 		suffix.name = "suffix"
 		suffix.parent = loc_settings.SC
 		suffix.value = LocMessages:GetConfig("suffix_" .. v, "")
-		suffix.text = LocMessages:Trans("suffix") .. " (" .. v .. ")"
+		suffix.text = LocMessages:Trans("LID_suffix") .. " (" .. v .. ")"
 		suffix.x = 10
 		suffix.y = LocMessages:GetAppendY()
 		suffix.dbvalue = "suffix_" .. v
@@ -159,7 +159,7 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.69")
+		LocMessages:SetVersion(135860, "1.2.70")
 		LocMessages:CreateMinimapButton(
 			{
 				["name"] = "LocMessages",
