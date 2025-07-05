@@ -195,7 +195,7 @@ f_loc:SetScript(
 						if LocMessages:GetConfig("showinenglishonly", false) then
 							LocMessages:ToCurrentChat(string.format(locEng, text, LocMessages:MathR(duration, 1)))
 						else
-							LocMessages:ToCurrentChat(string.format(LocMessages:Trans("loctext"), text, LocMessages:MathR(duration, 1)))
+							LocMessages:ToCurrentChat(string.format(LocMessages:Trans("LID_loctext"), text, LocMessages:MathR(duration, 1)))
 						end
 					end
 
