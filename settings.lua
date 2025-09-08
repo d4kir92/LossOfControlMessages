@@ -14,7 +14,7 @@ end
 local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
-	loc_settings = LocMessages:CreateFrame(
+	loc_settings = LocMessages:CreateWindow(
 		{
 			["name"] = "LOC Messages",
 			["pTab"] = {"CENTER"},
