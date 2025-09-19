@@ -60,7 +60,17 @@ function LocMessages:ToCurrentChat(msg)
 		elseif inBg and LocMessages:GetConfig("showinbgs", false) == false then
 		elseif inRaid and LocMessages:GetConfig("showinraids", false) == false then
 		elseif not inInstance and LocMessages:GetConfig("showoutsideofinstance", false) == false then
-		elseif (canUseRole == false) or not LocMessages:GetConfig("onlyasheal", false) or (LocMessages:GetConfig("onlyasheal", false) and role == "HEALER") then
+		else
+			if canUseRole then
+				if role == "HEALER" and not LocMessages:GetConfig("showashealer", true) then
+					return false
+				elseif role == "DAMAGER" and not LocMessages:GetConfig("showasdamager", false) then
+					return false
+				elseif role == "TANK" and not LocMessages:GetConfig("showastank", false) then
+					return false
+				end
+			end
+
 			if mes ~= nil then
 				SendChatMessage(mes, _channel)
 			end

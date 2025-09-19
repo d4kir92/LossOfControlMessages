@@ -51,7 +51,9 @@ function LocMessages:InitSetting()
 	LocMessages:AppendCategory("OUTPUT")
 	LocMessages:AppendCheckbox("printnothing", false)
 	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
-		LocMessages:AppendCheckbox("onlyasheal", false)
+		LocMessages:AppendCheckbox("showashealer", true)
+		LocMessages:AppendCheckbox("showasdamager", false)
+		LocMessages:AppendCheckbox("showastank", false)
 	end
 
 	LocMessages:AppendCheckbox("showlocchat", true)
@@ -159,7 +161,7 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.72")
+		LocMessages:SetVersion(135860, "1.2.73")
 		LocMessages:CreateMinimapButton(
 			{
 				["name"] = "LocMessages",
