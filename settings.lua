@@ -140,6 +140,7 @@ function LocMessages:InitSetting()
 	end
 
 	LocMessages:AddSlash("loc", LocMessages.ToggleSettings)
+	LocMessages:AddSlash("locm", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locmsg", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locmessages", LocMessages.ToggleSettings)
 end
@@ -161,7 +162,7 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.86")
+		LocMessages:SetVersion(135860, "1.2.87")
 		LocMessages:CreateMinimapButton(
 			{
 				["name"] = "LocMessages",

@@ -1009,7 +1009,7 @@ function D4:GetTalentInfo()
                 specid = i
                 icon = iconTexture
                 local _, class = UnitClass("PLAYER")
-                if GetActiveTalentGroup and class == "DRUID" and D4:GetWoWBuild() ~= "CATA" then
+                if GetActiveTalentGroup and class == "DRUID" and D4:GetWoWBuild() ~= "CATA" and D4:GetWoWBuild() ~= "TBC" then
                     local group = GetActiveTalentGroup()
                     local role = GetTalentGroupRole(group)
                     if role == "DAMAGER" then
