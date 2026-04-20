@@ -1,5 +1,5 @@
 ## Interface: 40402
-## Version: 1.2.91
+## Version: 1.2.92
 ## Title: LossOfControlMessages |T135860:16:16:0:0|t by |cff55d2ffD4KiR |T132115:16:16:0:0|t
 ## Notes: Send to chat LOC messages
 ## Notes-ruRU: Отправляет в чат сообщения о потере контроля
