@@ -5,10 +5,19 @@
 ## Interface-Mists: 50504
 ## Interface: 120100, 120007
 
-## Version: 1.2.97
+## Version: 1.2.98
 ## Title: LossOfControlMessages by |cff55d2ffD4KiR |T132115:16:16:0:0|t
-## Notes: Send to chat LOC messages
+## Notes: Post messages about the loss of control in the chat
+## Notes-deDE: Sendet Nachrichten über den Kontrollverlust in den Chat
+## Notes-esES: Publica mensajes sobre la pérdida de control en el chat
+## Notes-esMX: Publica mensajes sobre la pérdida de control en el chat
+## Notes-frFR: Publie des messages sur la perte de contrôle dans le chat
+## Notes-itIT: Pubblica messaggi sulla perdita di controllo in chat
+## Notes-koKR: 채팅에 조작 불능 상태에 대한 메시지를 게시합니다
+## Notes-ptBR: Publica mensagens sobre perda de controle no chat
 ## Notes-ruRU: Отправляет в чат сообщения о потере контроля
+## Notes-zhCN: 在聊天中发布关于失控的消息
+## Notes-zhTW: 在聊天中發布關於失控的訊息
 ## Author: D4KiR |T132115:16:16:0:0|t
 ## Category: Combat
 ## Category-deDE: Kampf
@@ -36,7 +45,9 @@ locale\deDE.lua
 locale\esES.lua
 locale\esMX.lua
 locale\frFR.lua
+locale\itIT.lua
 locale\koKR.lua
+locale\ptBR.lua
 locale\ruRU.lua
 locale\zhCN.lua
 locale\zhTW.lua

@@ -3,11 +3,9 @@ local _, LocMessages = ...
 local CBS = {}
 function LocMessages:CreateText(tab)
 	tab.textsize = tab.textsize or 12
-	local text = tab.frame:CreateFontString(nil, "ARTWORK")
-	text:SetFont(STANDARD_TEXT_FONT, tab.textsize, "OUTLINE")
+	local text = tab.frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	text:SetPoint("TOPLEFT", tab.parent, "TOPLEFT", tab.x, tab.y)
 	text:SetText(tab.text)
-
 	return text
 end
 
@@ -36,15 +34,11 @@ function LocMessages:CreateTextBox(tab)
 	tab.value = string.gsub(tab.value, "\n", "")
 	f.Text:SetText(tab.value or "")
 	f.Text:SetCursorPosition(0)
-	f.Text:SetScript(
-		"OnTextChanged",
-		function(sel)
-			local text = sel:GetText()
-			sel:SetText(text)
-			LOCTABPC[tab.dbvalue] = text
-		end
-	)
-
+	f.Text:SetScript("OnTextChanged", function(sel)
+		local text = sel:GetText()
+		sel:SetText(text)
+		LOCTABPC[tab.dbvalue] = text
+	end)
 	return f
 end
 
@@ -58,14 +52,11 @@ function LocMessages:CreateCheckBox(tab)
 	CB:SetPoint("TOPLEFT", tab.x, tab.y)
 	CB.tooltip = tab.tooltip
 	CB:SetChecked(tab.checked)
-	CB:SetScript(
-		"OnClick",
-		function(sel)
-			local status = CB:GetChecked()
-			sel:SetChecked(status)
-			LOCTABPC[tab.dbvalue] = status
-		end
-	)
+	CB:SetScript("OnClick", function(sel)
+		local status = CB:GetChecked()
+		sel:SetChecked(status)
+		LOCTABPC[tab.dbvalue] = status
+	end)
 
 	local entry = {}
 	entry.ele = CB
@@ -75,7 +66,6 @@ function LocMessages:CreateCheckBox(tab)
 	tab.x = tab.x + 26
 	tab.y = tab.y - 6
 	CB.text = LocMessages:CreateText(tab)
-
 	return CB
 end
 
@@ -90,21 +80,18 @@ function LocMessages:CreateSlider(tab)
 	if SL.Low == nil then
 		SL.Low = SL:CreateFontString(nil, nil, "GameFontNormal")
 		SL.Low:SetPoint("BOTTOMLEFT", SL, "BOTTOMLEFT", 0, -12)
-		SL.Low:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
 		SL.Low:SetTextColor(1, 1, 1)
 	end
 
 	if SL.High == nil then
 		SL.High = SL:CreateFontString(nil, nil, "GameFontNormal")
 		SL.High:SetPoint("BOTTOMRIGHT", SL, "BOTTOMRIGHT", 0, -12)
-		SL.High:SetFont(STANDARD_TEXT_FONT, 10, "THINOUTLINE")
 		SL.High:SetTextColor(1, 1, 1)
 	end
 
 	if SL.Text == nil then
 		SL.Text = SL:CreateFontString(nil, nil, "GameFontNormal")
 		SL.Text:SetPoint("TOP", SL, "TOP", 0, 16)
-		SL.Text:SetFont(STANDARD_TEXT_FONT, 12, "THINOUTLINE")
 		SL.Text:SetTextColor(1, 1, 1)
 	end
 
@@ -117,30 +104,21 @@ function LocMessages:CreateSlider(tab)
 	tab.steps = tab.steps or 1
 	SL:SetValueStep(tab.steps)
 	SL.decimals = tab.decimals or 0
-	SL:SetScript(
-		"OnValueChanged",
-		function(sel, val)
-			val = LocMessages:MathR(val, sel.decimals)
-			val = val - val % tab.steps
-			LOCTABPC[tab.dbvalue] = val
-			local trans = {}
-			trans["VALUE"] = val
-			SL.Text:SetText(tab.text)
-			if tab.func ~= nil then
-				tab:func()
-			end
-		end
-	)
+	SL:SetScript("OnValueChanged", function(sel, val)
+		val = LocMessages:MathR(val, sel.decimals)
+		val = val - val % tab.steps
+		LOCTABPC[tab.dbvalue] = val
+		local trans = {}
+		trans["VALUE"] = val
+		SL.Text:SetText(tab.text)
+		if tab.func ~= nil then tab:func() end
+	end)
 
-	hooksecurefunc(
-		"UpdateLanguage",
-		function()
-			local trans = {}
-			trans["VALUE"] = SL:GetValue()
-			SL.Text:SetText(tab.text)
-		end
-	)
-
+	hooksecurefunc("UpdateLanguage", function()
+		local trans = {}
+		trans["VALUE"] = SL:GetValue()
+		SL.Text:SetText(tab.text)
+	end)
 	return EB
 end
 
@@ -175,7 +153,6 @@ function LocMessages:CTexture(frame, tab)
 		tab.y = tab.y or 0
 		texture:SetPoint(tab.align or "TOPLEFT", frame, tab.x, tab.y)
 	end
-
 	return texture
 end
 
@@ -198,21 +175,17 @@ function LocMessages:CreateF(tab)
 	frame.texture = LocMessages:CTexture(frame, tab)
 	tab.textlayer = tab.textlayer or "ARTWORK"
 	frame.text = frame:CreateFontString(nil, tab.textlayer)
-	frame.text:SetFont(STANDARD_TEXT_FONT, tab.textsize, "OUTLINE")
 	frame.text:SetPoint(tab.textalign, 0, 0)
 	frame.text:SetText(tab.text)
 	function frame:SetText(text)
 		frame.text:SetText(text)
 	end
-
 	return frame
 end
 
 function LocMessages:UpdateOptions()
 	-- CHECKBOXES
 	for i, v in pairs(CBS) do
-		if LocMessages:GetConfig(v.dbvalue) ~= nil then
-			v.ele:SetChecked(LocMessages:GetConfig(v.dbvalue))
-		end
+		if LocMessages:GetConfig(v.dbvalue) ~= nil then v.ele:SetChecked(LocMessages:GetConfig(v.dbvalue)) end
 	end
 end
