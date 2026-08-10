@@ -14,15 +14,13 @@ end
 local BR = 16
 local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
 function LocMessages:InitSetting()
-	loc_settings = LocMessages:CreateWindow(
-		{
-			["name"] = "LOC Messages",
-			["pTab"] = {"CENTER"},
-			["sw"] = 520,
-			["sh"] = 520,
-			["title"] = format("|T135860:16:16:0:0|t LossOfControlMessages v%s", LocMessages:GetVersion())
-		}
-	)
+	loc_settings = LocMessages:CreateWindow({
+		["name"] = "LOC Messages",
+		["pTab"] = {"CENTER"},
+		["sw"] = 520,
+		["sh"] = 520,
+		["title"] = format("|T135860:16:16:0:0|t LossOfControlMessages v%s", LocMessages:GetVersion())
+	})
 
 	loc_settings.SF = CreateFrame("ScrollFrame", "loc_settings_SF", loc_settings, "UIPanelScrollFrameTemplate")
 	loc_settings.SF:SetPoint("TOPLEFT", loc_settings, 8, -26)
@@ -36,17 +34,13 @@ function LocMessages:InitSetting()
 	LocMessages:SetAppendParent(loc_settings.SC)
 	LocMessages:SetAppendTab(LOCTABPC)
 	LocMessages:AppendCategory("GENERAL")
-	LocMessages:AppendCheckbox(
-		"MMBTN",
-		true,
-		function(sel, checked)
-			if checked then
-				LocMessages:ShowMMBtn("LocMessages")
-			else
-				LocMessages:HideMMBtn("LocMessages")
-			end
+	LocMessages:AppendCheckbox("MMBTN", true, function(sel, checked)
+		if checked then
+			LocMessages:ShowMMBtn("LocMessages")
+		else
+			LocMessages:HideMMBtn("LocMessages")
 		end
-	)
+	end)
 
 	LocMessages:AppendCategory("OUTPUT")
 	LocMessages:AppendCheckbox("printnothing", false)
@@ -60,24 +54,15 @@ function LocMessages:InitSetting()
 	LocMessages:AppendCheckbox("showlocemote", true)
 	LocMessages:AppendCheckbox("showinenglishonly", false)
 	LocMessages:AppendCheckbox("showdispelltype", true)
-	LocMessages:AppendDropdown(
-		"channelchat",
-		"AUTO",
-		{
-			["AUTO"] = "tAUTO",
-			["PARTY"] = "tPARTY",
-			["RAID"] = "tRAID",
-			["RAID_WARNING"] = "tRAID_WARNING",
-			["INSTANCE_CHAT"] = "tINSTANCE_CHAT",
-			["YELL"] = "tYELL",
-			["SAY"] = "tSAY",
-		},
-		function(val)
-			if LOCTABPC and val then
-				LOCTABPC["channelchat"] = val
-			end
-		end
-	)
+	LocMessages:AppendDropdown("channelchat", "AUTO", {
+		["AUTO"] = "tAUTO",
+		["PARTY"] = "tPARTY",
+		["RAID"] = "tRAID",
+		["RAID_WARNING"] = "tRAID_WARNING",
+		["INSTANCE_CHAT"] = "tINSTANCE_CHAT",
+		["YELL"] = "tYELL",
+		["SAY"] = "tSAY",
+	}, function(val) if LOCTABPC and val then LOCTABPC["channelchat"] = val end end)
 
 	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
 	LocMessages:AppendCategory("LOCATION")
@@ -162,34 +147,27 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.96")
-		LocMessages:CreateMinimapButton(
-			{
-				["name"] = "LocMessages",
-				["icon"] = 135860,
-				["dbtab"] = LOCTABPC,
-				["vTT"] = {{"|T135860:16:16:0:0|t LossOfControlMessages", "v" .. LocMessages:GetVersion()}, {LocMessages:Trans("LID_LEFTCLICK"), LocMessages:Trans("LID_OPENSETTINGS")}, {LocMessages:Trans("LID_RIGHTCLICK"), LocMessages:Trans("LID_HIDEMINIMAPBUTTON")}},
-				["funcL"] = function()
-					LocMessages:ToggleSettings()
-				end,
-				["funcR"] = function()
-					LocMessages:SV(LOCTABPC, "MMBTN", false)
-					LocMessages:MSG("Minimap Button is now hidden.")
-					LocMessages:HideMMBtn("LocMessages")
-				end,
-				["dbkey"] = "MMBTN"
-			}
-		)
+		LocMessages:SetVersion(135860, "1.2.97")
+		LocMessages:CreateMinimapButton({
+			["name"] = "LocMessages",
+			["icon"] = 135860,
+			["dbtab"] = LOCTABPC,
+			["vTT"] = {{"|T135860:16:16:0:0|t LossOfControlMessages", "v" .. LocMessages:GetVersion()}, {LocMessages:Trans("LID_LEFTCLICK"), LocMessages:Trans("LID_OPENSETTINGS")}, {LocMessages:Trans("LID_RIGHTCLICK"), LocMessages:Trans("LID_HIDEMINIMAPBUTTON")}},
+			["funcL"] = function() LocMessages:ToggleSettings() end,
+			["funcR"] = function()
+				LocMessages:SV(LOCTABPC, "MMBTN", false)
+				LocMessages:MSG("Minimap Button is now hidden.")
+				LocMessages:HideMMBtn("LocMessages")
+			end,
+			["dbkey"] = "MMBTN"
+		})
 	elseif event == "PLAYER_LOGIN" and not LOCloaded then
 		frame:UnregisterEvent("PLAYER_LOGIN")
 		LOCloaded = true
-		C_Timer.After(
-			0,
-			function()
-				LocMessages:SetSetup(true)
-				LocMessages:SetupLOC()
-			end
-		)
+		C_Timer.After(0, function()
+			LocMessages:SetSetup(true)
+			LocMessages:SetupLOC()
+		end)
 	end
 end
 
