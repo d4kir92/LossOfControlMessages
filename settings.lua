@@ -3,6 +3,7 @@ local AddonName, LocMessages = ...
 local locset = nil
 local DEFAULT_WIDTH = 520
 local DEFAULT_HEIGHT = 520
+local DEFAULT_PREFIX = "[LOC]"
 function LocMessages:ToggleSettings()
 	if locset == nil then return end
 	locset:Toggle()
@@ -49,21 +50,21 @@ local function AddCheckbox(key, default, func)
 	})
 end
 
-local function AddEditbox(key, label, search)
+local function AddEditbox(key, default, label, search)
 	locset:AddEditbox({
 		["label"] = label or ("LID_" .. key),
 		["search"] = search or key,
-		["value"] = LocMessages:GetConfig(key, ""),
+		["value"] = LocMessages:GetConfig(key, default),
 		["maxLetters"] = 20,
 		["func"] = function(value) LOCTABPC[key] = value end
 	})
 end
 
-local function AddAffixes(prefix, label)
+local function AddAffixes(prefix, default, label)
 	AddCategory(string.upper(prefix), label, 2, true)
-	AddEditbox(prefix, "LID_ALLTYPES", prefix)
+	AddEditbox(prefix, default, "LID_ALLTYPES", prefix)
 	for _, loctype in ipairs(LOCTypes) do
-		AddEditbox(prefix .. "_" .. loctype, "LID_" .. string.lower(loctype), prefix .. " " .. loctype)
+		AddEditbox(prefix .. "_" .. loctype, "", "LID_" .. string.lower(loctype), prefix .. " " .. loctype)
 	end
 end
 
@@ -156,8 +157,8 @@ function LocMessages:InitSetting()
 		["func"] = function(value) LOCTABPC["channelchat"] = value end
 	})
 
-	AddAffixes("prefix", "LID_prefix")
-	AddAffixes("suffix", "LID_suffix")
+	AddAffixes("prefix", DEFAULT_PREFIX, "LID_prefix")
+	AddAffixes("suffix", "", "LID_suffix")
 	locset:ResumeLayout()
 	LocMessages:AddSlash("loc", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locm", LocMessages.ToggleSettings)
@@ -182,7 +183,12 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.3.0")
+		if LOCTABPC["PREFIXDEFAULTAPPLIED"] == nil then
+			LOCTABPC["PREFIXDEFAULTAPPLIED"] = true
+			if LOCTABPC["prefix"] == nil or LOCTABPC["prefix"] == "" then LOCTABPC["prefix"] = DEFAULT_PREFIX end
+		end
+
+		LocMessages:SetVersion(135860, "1.3.1")
 		LocMessages:CreateMinimapButton({
 			["name"] = "LocMessages",
 			["icon"] = 135860,
