@@ -43,3 +43,6 @@ LocMessages:AddTrans("zhCN", "LID_tSAY", "说话 (本地范围消息) (可能导
 LocMessages:AddTrans("zhCN", "LID_showashealer", "职责为治疗时显示")
 LocMessages:AddTrans("zhCN", "LID_showasdamager", "职责为输出时显示")
 LocMessages:AddTrans("zhCN", "LID_showastank", "职责为坦克时显示")
+LocMessages:AddTrans("zhCN", "LID_VISIBILITY", "可见性")
+LocMessages:AddTrans("zhCN", "LID_ROLES", "角色定位")
+LocMessages:AddTrans("zhCN", "LID_ALLTYPES", "所有类型")

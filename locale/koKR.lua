@@ -43,3 +43,6 @@ LocMessages:AddTrans("koKR", "LID_tSAY", "말하기 (지역 범위 메시지) (�
 LocMessages:AddTrans("koKR", "LID_showashealer", "역할이 치유사일 때 표시")
 LocMessages:AddTrans("koKR", "LID_showasdamager", "역할이 공격대원일 때 표시")
 LocMessages:AddTrans("koKR", "LID_showastank", "역할이 방어대원일 때 표시")
+LocMessages:AddTrans("koKR", "LID_VISIBILITY", "표시 여부")
+LocMessages:AddTrans("koKR", "LID_ROLES", "역할")
+LocMessages:AddTrans("koKR", "LID_ALLTYPES", "모든 유형")

@@ -43,3 +43,6 @@ LocMessages:AddTrans("enUS", "LID_tSAY", "Say (Local-Range Message) (This may ca
 LocMessages:AddTrans("enUS", "LID_showashealer", "Show, when role is healer")
 LocMessages:AddTrans("enUS", "LID_showasdamager", "Show, when role is damage dealer")
 LocMessages:AddTrans("enUS", "LID_showastank", "Show, when role is tank")
+LocMessages:AddTrans("enUS", "LID_VISIBILITY", "Visibility")
+LocMessages:AddTrans("enUS", "LID_ROLES", "Roles")
+LocMessages:AddTrans("enUS", "LID_ALLTYPES", "All Types")

@@ -43,3 +43,6 @@ LocMessages:AddTrans("deDE", "LID_tSAY", "Say (Local-Range Message) (This may ca
 LocMessages:AddTrans("deDE", "LID_showashealer", "Zeigen, wenn die Rolle Heiler ist")
 LocMessages:AddTrans("deDE", "LID_showasdamager", "Zeigen, wenn die Rolle Schaden ist")
 LocMessages:AddTrans("deDE", "LID_showastank", "Zeigen, wenn die Rolle Tank ist")
+LocMessages:AddTrans("deDE", "LID_VISIBILITY", "Sichtbarkeit")
+LocMessages:AddTrans("deDE", "LID_ROLES", "Rollen")
+LocMessages:AddTrans("deDE", "LID_ALLTYPES", "Alle Typen")

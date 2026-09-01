@@ -43,3 +43,6 @@ LocMessages:AddTrans("ruRU", "LID_tSAY", "Сказать (Сообщение л�
 LocMessages:AddTrans("ruRU", "LID_showashealer", "Показывать, когда роль 'Целитель'")
 LocMessages:AddTrans("ruRU", "LID_showasdamager", "Показывать, когда роль 'Нанесение урона'")
 LocMessages:AddTrans("ruRU", "LID_showastank", "Показывать, когда роль 'Танк'")
+LocMessages:AddTrans("ruRU", "LID_VISIBILITY", "Видимость")
+LocMessages:AddTrans("ruRU", "LID_ROLES", "Роли")
+LocMessages:AddTrans("ruRU", "LID_ALLTYPES", "Все типы")

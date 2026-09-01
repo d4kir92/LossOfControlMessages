@@ -43,3 +43,6 @@ LocMessages:AddTrans("itIT", "LID_tSAY", "Dire (Messaggio a portata locale) (Que
 LocMessages:AddTrans("itIT", "LID_showashealer", "Mostra quando il ruolo è Curatore")
 LocMessages:AddTrans("itIT", "LID_showasdamager", "Mostra quando il ruolo è Danno")
 LocMessages:AddTrans("itIT", "LID_showastank", "Mostra quando il ruolo è Tank")
+LocMessages:AddTrans("itIT", "LID_VISIBILITY", "Visibilità")
+LocMessages:AddTrans("itIT", "LID_ROLES", "Ruoli")
+LocMessages:AddTrans("itIT", "LID_ALLTYPES", "Tutti i tipi")

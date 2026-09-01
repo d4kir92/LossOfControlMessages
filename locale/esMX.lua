@@ -43,3 +43,6 @@ LocMessages:AddTrans("esMX", "LID_tSAY", "Decir (Mensaje de alcance local) (Esto
 LocMessages:AddTrans("esMX", "LID_showashealer", "Mostrar cuando el rol es Sanador")
 LocMessages:AddTrans("esMX", "LID_showasdamager", "Mostrar cuando el rol es Dañador")
 LocMessages:AddTrans("esMX", "LID_showastank", "Mostrar cuando el rol es Tanque")
+LocMessages:AddTrans("esMX", "LID_VISIBILITY", "Visibilidad")
+LocMessages:AddTrans("esMX", "LID_ROLES", "Roles")
+LocMessages:AddTrans("esMX", "LID_ALLTYPES", "Todos los tipos")

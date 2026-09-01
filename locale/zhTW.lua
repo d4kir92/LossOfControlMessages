@@ -43,3 +43,6 @@ LocMessages:AddTrans("zhTW", "LID_tSAY", "說話 (本地範圍訊息) (可能導
 LocMessages:AddTrans("zhTW", "LID_showashealer", "職責為治療時顯示")
 LocMessages:AddTrans("zhTW", "LID_showasdamager", "職責為輸出時顯示")
 LocMessages:AddTrans("zhTW", "LID_showastank", "職責為坦克時顯示")
+LocMessages:AddTrans("zhTW", "LID_VISIBILITY", "可見性")
+LocMessages:AddTrans("zhTW", "LID_ROLES", "角色定位")
+LocMessages:AddTrans("zhTW", "LID_ALLTYPES", "所有類型")

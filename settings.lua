@@ -1,129 +1,164 @@
 -- By D4KiR
 local AddonName, LocMessages = ...
-local loc_settings = nil
+local locset = nil
+local DEFAULT_WIDTH = 520
+local DEFAULT_HEIGHT = 520
 function LocMessages:ToggleSettings()
-	if loc_settings then
-		if loc_settings:IsShown() then
-			loc_settings:Hide()
-		else
-			loc_settings:Show()
-		end
+	if locset == nil then return end
+	locset:Toggle()
+end
+
+local LOCTypes = {"CHARM", "CONFUSE", "DISARM", "FEAR", "FEAR_MECHANIC", "PACIFY", "PACIFYSILENCE", "POSSESS", "ROOT", "SCHOOL_INTERRUPT", "SILENCE", "STUN", "STUN_MECHANIC"}
+local function GetCollapsed(key)
+	if key == nil then return nil end
+	if type(LOCTABPC) ~= "table" then return nil end
+	if type(LOCTABPC["COLLAPSED"]) ~= "table" then return nil end
+	return LOCTABPC["COLLAPSED"][key]
+end
+
+local function SetCollapsed(key, collapsed)
+	if key == nil then return end
+	if type(LOCTABPC) ~= "table" then return end
+	if type(LOCTABPC["COLLAPSED"]) ~= "table" then LOCTABPC["COLLAPSED"] = {} end
+	if collapsed then
+		LOCTABPC["COLLAPSED"][key] = true
+	else
+		LOCTABPC["COLLAPSED"][key] = nil
 	end
 end
 
-local BR = 16
-local LOCTypes = {"DISARM", "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "ROOT", "FEAR_MECHANIC", "NONE"}
+local function AddCategory(key, label, level, collapsed)
+	locset:AddCategory({
+		["label"] = label or ("LID_" .. key),
+		["key"] = key,
+		["search"] = key,
+		["level"] = level,
+		["collapsed"] = collapsed
+	})
+end
+
+local function AddCheckbox(key, default, func)
+	locset:AddCheckbox({
+		["label"] = "LID_" .. key,
+		["search"] = key,
+		["value"] = LocMessages:GetConfig(key, default),
+		["func"] = function(value)
+			LOCTABPC[key] = value
+			if func then func(value) end
+		end
+	})
+end
+
+local function AddEditbox(key, label, search)
+	locset:AddEditbox({
+		["label"] = label or ("LID_" .. key),
+		["search"] = search or key,
+		["value"] = LocMessages:GetConfig(key, ""),
+		["maxLetters"] = 20,
+		["func"] = function(value) LOCTABPC[key] = value end
+	})
+end
+
+local function AddAffixes(prefix, label)
+	AddCategory(string.upper(prefix), label, 2, true)
+	AddEditbox(prefix, "LID_ALLTYPES", prefix)
+	for _, loctype in ipairs(LOCTypes) do
+		AddEditbox(prefix .. "_" .. loctype, "LID_" .. string.lower(loctype), prefix .. " " .. loctype)
+	end
+end
+
 function LocMessages:InitSetting()
-	loc_settings = LocMessages:CreateWindow({
-		["name"] = "LOC Messages",
+	LOCTABPC = LOCTABPC or {}
+	locset = LocMessages:CreateUIWindow({
+		["name"] = "LossOfControlMessagesSettings",
 		["pTab"] = {"CENTER"},
-		["sw"] = 520,
-		["sh"] = 520,
-		["title"] = format("|T135860:16:16:0:0|t LossOfControlMessages v%s", LocMessages:GetVersion())
+		["width"] = LocMessages:GetConfig("WINDOWWIDTH", DEFAULT_WIDTH),
+		["height"] = LocMessages:GetConfig("WINDOWHEIGHT", DEFAULT_HEIGHT),
+		["minWidth"] = 360,
+		["minHeight"] = 240,
+		["onResize"] = function(width, height)
+			LOCTABPC["WINDOWWIDTH"] = width
+			LOCTABPC["WINDOWHEIGHT"] = height
+		end,
+		["getCollapsed"] = function(key) return GetCollapsed(key) end,
+		["setCollapsed"] = function(key, collapsed) SetCollapsed(key, collapsed) end,
+		["title"] = format("|T135860:16:16:0:0|t LossOfControlMessages by |cff55d2ffD4KiR |T132115:16:16:0:0|t v%s", LocMessages:GetVersion())
 	})
 
-	loc_settings.SF = CreateFrame("ScrollFrame", "loc_settings_SF", loc_settings, "UIPanelScrollFrameTemplate")
-	loc_settings.SF:SetPoint("TOPLEFT", loc_settings, 8, -26)
-	loc_settings.SF:SetPoint("BOTTOMRIGHT", loc_settings, -32, 8)
-	loc_settings.SC = CreateFrame("Frame", "loc_settings_SC", loc_settings.SF)
-	loc_settings.SC:SetSize(loc_settings.SF:GetSize())
-	loc_settings.SC:SetPoint("TOPLEFT", loc_settings.SF, "TOPLEFT", 0, 0)
-	loc_settings.SF:SetScrollChild(loc_settings.SC)
-	local y = 0
-	LocMessages:SetAppendY(y)
-	LocMessages:SetAppendParent(loc_settings.SC)
-	LocMessages:SetAppendTab(LOCTABPC)
-	LocMessages:AppendCategory("GENERAL")
-	LocMessages:AppendCheckbox("MMBTN", true, function(sel, checked)
-		if checked then
+	locset:SuspendLayout()
+	locset:AddSearch()
+	AddCategory("GENERAL")
+	AddCheckbox("MMBTN", true, function(value)
+		if value then
 			LocMessages:ShowMMBtn("LocMessages")
 		else
 			LocMessages:HideMMBtn("LocMessages")
 		end
 	end)
 
-	LocMessages:AppendCategory("OUTPUT")
-	LocMessages:AppendCheckbox("printnothing", false)
+	AddCheckbox("printnothing", false)
+	AddCategory("LOCTYPES")
+	for _, loctype in ipairs(LOCTypes) do
+		AddCheckbox(string.lower(loctype), true)
+	end
+
+	AddCategory("VISIBILITY")
+	AddCheckbox("showinarenas", true)
+	AddCheckbox("showinbgs", false)
+	AddCheckbox("showinraids", false)
+	AddCheckbox("showoutsideofinstance", false)
 	if UnitGroupRolesAssigned and LocMessages:GetWoWBuildNr() > 19999 then
-		LocMessages:AppendCheckbox("showashealer", true)
-		LocMessages:AppendCheckbox("showasdamager", false)
-		LocMessages:AppendCheckbox("showastank", false)
+		AddCategory("ROLES", nil, 2)
+		AddCheckbox("showashealer", true)
+		AddCheckbox("showasdamager", false)
+		AddCheckbox("showastank", false)
 	end
 
-	LocMessages:AppendCheckbox("showlocchat", true)
-	LocMessages:AppendCheckbox("showlocemote", true)
-	LocMessages:AppendCheckbox("showinenglishonly", false)
-	LocMessages:AppendCheckbox("showdispelltype", true)
-	LocMessages:AppendDropdown("channelchat", "AUTO", {
-		["AUTO"] = "tAUTO",
-		["PARTY"] = "tPARTY",
-		["RAID"] = "tRAID",
-		["RAID_WARNING"] = "tRAID_WARNING",
-		["INSTANCE_CHAT"] = "tINSTANCE_CHAT",
-		["YELL"] = "tYELL",
-		["SAY"] = "tSAY",
-	}, function(val) if LOCTABPC and val then LOCTABPC["channelchat"] = val end end)
+	AddCategory("OUTPUT")
+	AddCheckbox("showlocchat", true)
+	AddCheckbox("showlocemote", true)
+	AddCheckbox("showdispelltype", true)
+	AddCheckbox("showinenglishonly", false)
+	locset:AddDropdown({
+		["label"] = "LID_channelchat",
+		["search"] = "channelchat",
+		["value"] = LocMessages:GetConfig("channelchat", "AUTO"),
+		["choices"] = {
+			{
+				["value"] = "AUTO",
+				["label"] = "LID_tAUTO"
+			},
+			{
+				["value"] = "PARTY",
+				["label"] = "LID_tPARTY"
+			},
+			{
+				["value"] = "RAID",
+				["label"] = "LID_tRAID"
+			},
+			{
+				["value"] = "RAID_WARNING",
+				["label"] = "LID_tRAID_WARNING"
+			},
+			{
+				["value"] = "INSTANCE_CHAT",
+				["label"] = "LID_tINSTANCE_CHAT"
+			},
+			{
+				["value"] = "YELL",
+				["label"] = "LID_tYELL"
+			},
+			{
+				["value"] = "SAY",
+				["label"] = "LID_tSAY"
+			},
+		},
+		["func"] = function(value) LOCTABPC["channelchat"] = value end
+	})
 
-	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
-	LocMessages:AppendCategory("LOCATION")
-	LocMessages:AppendCheckbox("showinarenas", true)
-	LocMessages:AppendCheckbox("showinraids", false)
-	LocMessages:AppendCheckbox("showoutsideofinstance", false)
-	LocMessages:AppendCheckbox("showinbgs", false)
-	LocMessages:AppendCategory("LOCTYPES")
-	for i, loctype in pairs(LOCTypes) do
-		loctype = string.lower(loctype)
-		LocMessages:AppendCheckbox(loctype, true)
-	end
-
-	LocMessages:AppendCategory("prefix")
-	local pre = {}
-	pre.name = "prefix"
-	pre.parent = loc_settings.SC
-	pre.value = LocMessages:GetConfig("prefix", "")
-	pre.text = LocMessages:Trans("LID_prefix")
-	pre.x = 10
-	pre.y = LocMessages:GetAppendY()
-	pre.dbvalue = "prefix"
-	LocMessages:CreateTextBox(pre)
-	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
-	for i, v in pairs(LOCTypes) do
-		local prefix = {}
-		prefix.name = "prefix"
-		prefix.parent = loc_settings.SC
-		prefix.value = LocMessages:GetConfig("prefix_" .. v, "")
-		prefix.text = LocMessages:Trans("LID_prefix") .. " (" .. v .. ")"
-		prefix.x = 10
-		prefix.y = LocMessages:GetAppendY()
-		prefix.dbvalue = "prefix_" .. v
-		LocMessages:CreateTextBox(prefix)
-		LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
-	end
-
-	LocMessages:AppendCategory("suffix")
-	local suf = {}
-	suf.name = "suffix"
-	suf.parent = loc_settings.SC
-	suf.value = LocMessages:GetConfig("suffix", "")
-	suf.text = LocMessages:Trans("LID_suffix")
-	suf.x = 10
-	suf.y = LocMessages:GetAppendY()
-	suf.dbvalue = "suffix"
-	LocMessages:CreateTextBox(suf)
-	LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
-	for i, v in pairs(LOCTypes) do
-		local suffix = {}
-		suffix.name = "suffix"
-		suffix.parent = loc_settings.SC
-		suffix.value = LocMessages:GetConfig("suffix_" .. v, "")
-		suffix.text = LocMessages:Trans("LID_suffix") .. " (" .. v .. ")"
-		suffix.x = 10
-		suffix.y = LocMessages:GetAppendY()
-		suffix.dbvalue = "suffix_" .. v
-		LocMessages:CreateTextBox(suffix)
-		LocMessages:SetAppendY(LocMessages:GetAppendY() - BR)
-	end
-
+	AddAffixes("prefix", "LID_prefix")
+	AddAffixes("suffix", "LID_suffix")
+	locset:ResumeLayout()
 	LocMessages:AddSlash("loc", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locm", LocMessages.ToggleSettings)
 	LocMessages:AddSlash("locmsg", LocMessages.ToggleSettings)
@@ -147,7 +182,7 @@ function frame:OnEvent(event, addonName, ...)
 	if event == "ADDON_LOADED" and addonName == AddonName then
 		frame:UnregisterEvent("ADDON_LOADED")
 		LOCTABPC = LOCTABPC or {}
-		LocMessages:SetVersion(135860, "1.2.99")
+		LocMessages:SetVersion(135860, "1.3.0")
 		LocMessages:CreateMinimapButton({
 			["name"] = "LocMessages",
 			["icon"] = 135860,

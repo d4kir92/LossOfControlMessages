@@ -43,3 +43,6 @@ LocMessages:AddTrans("ptBR", "LID_tSAY", "Falar (Mensagem de alcance local) (Iss
 LocMessages:AddTrans("ptBR", "LID_showashealer", "Mostrar quando a função for Curandeiro")
 LocMessages:AddTrans("ptBR", "LID_showasdamager", "Mostrar quando a função for Dano")
 LocMessages:AddTrans("ptBR", "LID_showastank", "Mostrar quando a função for Tanque")
+LocMessages:AddTrans("ptBR", "LID_VISIBILITY", "Visibilidade")
+LocMessages:AddTrans("ptBR", "LID_ROLES", "Funções")
+LocMessages:AddTrans("ptBR", "LID_ALLTYPES", "Todos os tipos")

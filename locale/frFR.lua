@@ -43,3 +43,6 @@ LocMessages:AddTrans("frFR", "LID_tSAY", "Dire (Message à portée locale) (Cela
 LocMessages:AddTrans("frFR", "LID_showashealer", "Afficher quand le rôle est Soigneur")
 LocMessages:AddTrans("frFR", "LID_showasdamager", "Afficher quand le rôle est Dégâts")
 LocMessages:AddTrans("frFR", "LID_showastank", "Afficher quand le rôle est Tank")
+LocMessages:AddTrans("frFR", "LID_VISIBILITY", "Visibilité")
+LocMessages:AddTrans("frFR", "LID_ROLES", "Rôles")
+LocMessages:AddTrans("frFR", "LID_ALLTYPES", "Tous les types")
