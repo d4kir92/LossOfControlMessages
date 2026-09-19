@@ -94,9 +94,16 @@ function LocMessages:SetupLOC()
 	end
 end
 
+local function LOCGetAuraDispel(index)
+	local _, _, _, dispelType, _, _, _, _, _, spellId = LocMessages:UnitAura("player", index, "HARMFUL")
+
+	return dispelType, spellId
+end
+
 local function LOCGetSchoolType(sid)
 	for i = 1, 6 do
-		local _, _, _, dispelType, _, _, _, _, _, spellId = LocMessages:UnitAura("player", i, "HARMFUL")
+		local ok, dispelType, spellId = pcall(LOCGetAuraDispel, i)
+		if not ok then return nil end
 		if spellId and spellId == sid then return dispelType end
 	end
 
