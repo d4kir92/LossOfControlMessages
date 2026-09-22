@@ -1,5 +1,9 @@
 -- By D4KiR
 local _, LocMessages = ...
+local function IsChatMessagingLocked()
+	return C_ChatInfo and C_ChatInfo.InChatMessagingLockdown and C_ChatInfo.InChatMessagingLockdown()
+end
+
 function LocMessages:AllowedTo()
 	local _channel = LocMessages:GetConfig("channelchat", "AUTO")
 	if (GetNumGroupMembers() > 0 or GetNumSubgroupMembers() > 0) and LocMessages:GetConfig("printnothing", false) == false then return true end
@@ -8,6 +12,8 @@ function LocMessages:AllowedTo()
 end
 
 function LocMessages:ToCurrentChat(msg)
+	if IsChatMessagingLocked() then return end
+
 	local _channel = "AUTO"
 	local inInstance, _ = IsInInstance()
 	local role = ""
@@ -72,7 +78,11 @@ function LocMessages:ToCurrentChat(msg)
 			end
 
 			if mes ~= nil then
-				SendChatMessage(mes, _channel)
+				if C_ChatInfo and C_ChatInfo.SendChatMessage then
+					C_ChatInfo.SendChatMessage(mes, _channel)
+				else
+					SendChatMessage(mes, _channel)
+				end
 			end
 		end
 	end
@@ -216,8 +226,12 @@ f_loc:SetScript(
 						end
 					end
 
-					if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() then
-						DoEmote("helpme")
+					if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() and not IsChatMessagingLocked() then
+						if C_ChatInfo and C_ChatInfo.PerformEmote then
+							C_ChatInfo.PerformEmote("helpme")
+						else
+							DoEmote("helpme")
+						end
 					end
 				end
 			elseif not tContains(LOCTypes, loctype) then

@@ -188,7 +188,7 @@ function frame:OnEvent(event, addonName, ...)
 			if LOCTABPC["prefix"] == nil or LOCTABPC["prefix"] == "" then LOCTABPC["prefix"] = DEFAULT_PREFIX end
 		end
 
-		LocMessages:SetVersion(135860, "1.3.2")
+		LocMessages:SetVersion(135860, "1.3.3")
 		LocMessages:CreateMinimapButton({
 			["name"] = "LocMessages",
 			["icon"] = 135860,
