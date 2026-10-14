@@ -83,7 +83,7 @@ function LocMessages:InitSetting()
 		end,
 		["getCollapsed"] = function(key) return GetCollapsed(key) end,
 		["setCollapsed"] = function(key, collapsed) SetCollapsed(key, collapsed) end,
-		["title"] = format("|T135860:16:16:0:0|t LossOfControlMessages by |cff55d2ffD4KiR |T132115:16:16:0:0|t v%s", LocMessages:GetVersion())
+		["title"] = format("|T%s:16:16:0:0|t LossOfControlMessages by |cff55d2ffD4KiR |T132115:16:16:0:0|t v%s", LocMessages:GetAddonIcon(), LocMessages:GetVersion())
 	})
 
 	locset:SuspendLayout()
@@ -188,12 +188,12 @@ function frame:OnEvent(event, addonName, ...)
 			if LOCTABPC["prefix"] == nil or LOCTABPC["prefix"] == "" then LOCTABPC["prefix"] = DEFAULT_PREFIX end
 		end
 
-		LocMessages:SetVersion(135860, "1.3.5")
+		LocMessages:SetVersion()
 		LocMessages:CreateMinimapButton({
 			["name"] = "LocMessages",
-			["icon"] = 135860,
+			["icon"] = LocMessages:GetAddonIcon(),
 			["dbtab"] = LOCTABPC,
-			["vTT"] = {{"|T135860:16:16:0:0|t LossOfControlMessages", "v" .. LocMessages:GetVersion()}, {LocMessages:Trans("LID_LEFTCLICK"), LocMessages:Trans("LID_OPENSETTINGS")}, {LocMessages:Trans("LID_RIGHTCLICK"), LocMessages:Trans("LID_HIDEMINIMAPBUTTON")}},
+			["vTT"] = {{format("|T%s:16:16:0:0|t LossOfControlMessages", LocMessages:GetAddonIcon()),"v" .. LocMessages:GetVersion()}, {LocMessages:Trans("LID_LEFTCLICK"), LocMessages:Trans("LID_OPENSETTINGS")}, {LocMessages:Trans("LID_RIGHTCLICK"), LocMessages:Trans("LID_HIDEMINIMAPBUTTON")}},
 			["funcL"] = function() LocMessages:ToggleSettings() end,
 			["funcR"] = function()
 				LocMessages:SV(LOCTABPC, "MMBTN", false)

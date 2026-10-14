@@ -1,2 +1,2 @@
 local _, LocMessages = ...
-LocMessages:SetAddonOutput("LossOfControlMessages", 135860)
+LocMessages:SetAddonOutput()

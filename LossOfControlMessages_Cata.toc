@@ -1,6 +1,6 @@
 ## Interface: 40402
-## Version: 1.3.5
-## Title: LossOfControlMessages |T135860:16:16:0:0|t by |cff55d2ffD4KiR |T132115:16:16:0:0|t
+## Version: 1.3.6
+## Title: LossOfControlMessages by |cff55d2ffD4KiR |T132115:16:16:0:0|t
 ## Notes: Post messages about the loss of control in the chat
 ## Notes-deDE: Sendet Nachrichten über den Kontrollverlust in den Chat
 ## Notes-esES: Publica mensajes sobre la pérdida de control en el chat
