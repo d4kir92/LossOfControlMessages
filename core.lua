@@ -211,6 +211,12 @@ f_loc:SetScript(
 		end
 
 		LocMessages:Debug(format("%s type=%s text=%s duration=%s spellID=%s", event, LocMessages:DebugValue(loctype), LocMessages:DebugValue(text), LocMessages:DebugValue(duration), LocMessages:DebugValue(spellID)))
+		if LocMessages:IsSecret(loctype) or LocMessages:IsSecret(text) or LocMessages:IsSecret(duration) or LocMessages:IsSecret(spellID) then
+			LocMessages:Debug("Skipped: loss of control data is secret")
+
+			return
+		end
+
 		dispelType = LOCGetSchoolType(spellID)
 		if LocMessages:GetConfig("showinenglishonly", false) and text ~= nil and loctype ~= nil then
 			if locsEng[loctype] then
