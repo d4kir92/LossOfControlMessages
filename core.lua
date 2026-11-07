@@ -11,8 +11,31 @@ function LocMessages:AllowedTo()
 	return false
 end
 
+function LocMessages:DebugValue(value)
+	if LocMessages:IsSecret(value) then return "<secret>" end
+
+	return tostring(value)
+end
+
+function LocMessages:Debug(msg)
+	if LOCTABPC and LOCTABPC["debug"] then
+		print("|cff00ccff[LOC Debug]|r " .. msg)
+	end
+end
+
+SLASH_LOCMESSAGESDEBUG1 = "/locdebug"
+SlashCmdList["LOCMESSAGESDEBUG"] = function()
+	LOCTABPC = LOCTABPC or {}
+	LOCTABPC["debug"] = not LOCTABPC["debug"]
+	print("|cff00ccff[LOC Debug]|r " .. (LOCTABPC["debug"] and "ON" or "OFF"))
+end
+
 function LocMessages:ToCurrentChat(msg)
-	if IsChatMessagingLocked() then return end
+	if IsChatMessagingLocked() then
+		LocMessages:Debug("Not sent: chat messaging lockdown active (Blizzard restriction)")
+
+		return
+	end
 
 	local _channel = "AUTO"
 	local inInstance, _ = IsInInstance()
@@ -62,22 +85,34 @@ function LocMessages:ToCurrentChat(msg)
 		local inBg = (inArena == nil or inArena == false) and UnitInBattleground("player")
 		local inRaid = UnitInRaid("player")
 		if LocMessages:GetConfig("printnothing", false) == true then
+			LocMessages:Debug("Not sent: messages turned off")
 		elseif inArena and LocMessages:GetConfig("showinarenas", true) == false then
+			LocMessages:Debug("Not sent: disabled in arenas")
 		elseif inBg and LocMessages:GetConfig("showinbgs", false) == false then
+			LocMessages:Debug("Not sent: disabled in battlegrounds")
 		elseif inRaid and LocMessages:GetConfig("showinraids", false) == false then
+			LocMessages:Debug("Not sent: disabled in raids")
 		elseif not inInstance and LocMessages:GetConfig("showoutsideofinstance", false) == false then
+			LocMessages:Debug("Not sent: disabled outside of instances")
 		else
 			if canUseRole then
 				if role == "HEALER" and not LocMessages:GetConfig("showashealer", true) then
+					LocMessages:Debug("Not sent: disabled for role HEALER")
+
 					return false
 				elseif role == "DAMAGER" and not LocMessages:GetConfig("showasdamager", false) then
+					LocMessages:Debug("Not sent: disabled for role DAMAGER")
+
 					return false
 				elseif role == "TANK" and not LocMessages:GetConfig("showastank", false) then
+					LocMessages:Debug("Not sent: disabled for role TANK")
+
 					return false
 				end
 			end
 
 			if mes ~= nil then
+				LocMessages:Debug("Sending to " .. tostring(_channel) .. ": " .. LocMessages:DebugValue(mes))
 				if C_ChatInfo and C_ChatInfo.SendChatMessage then
 					C_ChatInfo.SendChatMessage(mes, _channel)
 				else
@@ -85,6 +120,8 @@ function LocMessages:ToCurrentChat(msg)
 				end
 			end
 		end
+	else
+		LocMessages:Debug("Not sent: not in a group")
 	end
 end
 
@@ -173,6 +210,7 @@ f_loc:SetScript(
 			print("[LOC] C_LossOfControl is not valid.")
 		end
 
+		LocMessages:Debug(format("%s type=%s text=%s duration=%s spellID=%s", event, LocMessages:DebugValue(loctype), LocMessages:DebugValue(text), LocMessages:DebugValue(duration), LocMessages:DebugValue(spellID)))
 		dispelType = LOCGetSchoolType(spellID)
 		if LocMessages:GetConfig("showinenglishonly", false) and text ~= nil and loctype ~= nil then
 			if locsEng[loctype] then
@@ -200,6 +238,8 @@ f_loc:SetScript(
 					if locs[text] < GetTime() then
 						locs[text] = nil
 					elseif locs[text] > GetTime() then
+						LocMessages:Debug("Skipped: same effect still active")
+
 						return
 					end
 				else
@@ -224,6 +264,8 @@ f_loc:SetScript(
 						else
 							LocMessages:ToCurrentChat(string.format(LocMessages:Trans("LID_loctext"), text, LocMessages:MathR(duration, 1)))
 						end
+					else
+						LocMessages:Debug("Not sent: chat output disabled or not in a group")
 					end
 
 					if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() and not IsChatMessagingLocked() then
@@ -233,6 +275,8 @@ f_loc:SetScript(
 							DoEmote("helpme")
 						end
 					end
+				else
+					LocMessages:Debug(format("Skipped: type %s disabled, turned off or repeated", LocMessages:DebugValue(loctype)))
 				end
 			elseif not tContains(LOCTypes, loctype) then
 				local gam = "CLASSIC"
