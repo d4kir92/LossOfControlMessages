@@ -119,6 +119,7 @@ function LocMessages:InitSetting()
 	AddCheckbox("showlocchat", true)
 	AddCheckbox("showlocemote", true)
 	AddCheckbox("showdispelltype", true)
+	AddCheckbox("showsecretfallback", false)
 	AddCheckbox("showinenglishonly", false)
 	locset:AddDropdown({
 		["label"] = "LID_channelchat",

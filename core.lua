@@ -176,6 +176,39 @@ local locsEng = {
 }
 
 local locEng = "%s (For %i seconds)"
+local secretFallbackNext = 0
+function LocMessages:SendSecretFallback()
+	if not LocMessages:GetConfig("showsecretfallback", false) then
+		LocMessages:Debug("Skipped: generic message for secret data is disabled")
+
+		return
+	end
+
+	if LocMessages:GetConfig("printnothing", false) then return end
+	if GetTime() < secretFallbackNext then
+		LocMessages:Debug("Skipped: generic message on cooldown")
+
+		return
+	end
+
+	secretFallbackNext = GetTime() + 5
+	if LocMessages:GetConfig("showlocchat", true) and LocMessages:AllowedTo() then
+		if LocMessages:GetConfig("showinenglishonly", false) then
+			LocMessages:ToCurrentChat("Lost control!")
+		else
+			LocMessages:ToCurrentChat(LocMessages:Trans("LID_locsecret"))
+		end
+	end
+
+	if LocMessages:GetConfig("showlocemote", true) and LocMessages:AllowedTo() and not IsChatMessagingLocked() then
+		if C_ChatInfo and C_ChatInfo.PerformEmote then
+			C_ChatInfo.PerformEmote("helpme")
+		else
+			DoEmote("helpme")
+		end
+	end
+end
+
 local locs = {}
 local f_loc = CreateFrame("FRAME")
 f_loc.past = {}
@@ -212,7 +245,8 @@ f_loc:SetScript(
 
 		LocMessages:Debug(format("%s type=%s text=%s duration=%s spellID=%s", event, LocMessages:DebugValue(loctype), LocMessages:DebugValue(text), LocMessages:DebugValue(duration), LocMessages:DebugValue(spellID)))
 		if LocMessages:IsSecret(loctype) or LocMessages:IsSecret(text) or LocMessages:IsSecret(duration) or LocMessages:IsSecret(spellID) then
-			LocMessages:Debug("Skipped: loss of control data is secret")
+			LocMessages:Debug("Loss of control data is secret")
+			LocMessages:SendSecretFallback()
 
 			return
 		end
